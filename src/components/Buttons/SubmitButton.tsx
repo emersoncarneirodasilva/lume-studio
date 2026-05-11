@@ -3,7 +3,15 @@
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
 
-export default function SubmitButton({ text }: { text?: string }) {
+interface SubmitButtonProps {
+  text: string;
+  feedbackText: string;
+}
+
+export default function SubmitButton({
+  text,
+  feedbackText,
+}: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -15,7 +23,7 @@ export default function SubmitButton({ text }: { text?: string }) {
       {pending ? (
         <span className="flex items-center justify-center gap-2">
           <Loader2 className="w-4 h-4 animate-spin shrink-0" />
-          Conectando...
+          {feedbackText || "Conectando..."}
         </span>
       ) : (
         text || "Entrar"

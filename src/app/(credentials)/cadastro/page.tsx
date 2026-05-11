@@ -23,7 +23,6 @@ export default function RegisterPage() {
       </Suspense>
 
       {/* Lado Esquerdo - Formulário de Cadastro */}
-      {/* Corrigido: Usando py-12 para dar um espaçamento interno seguro sem empurrar o fundo */}
       <section className="w-full flex items-center justify-center p-6 sm:p-12 lg:p-16 py-12 relative z-10">
         <article className="w-full max-w-md space-y-6">
           {/* Cabeçalho no padrão Lume */}
@@ -141,7 +140,10 @@ export default function RegisterPage() {
 
             {/* Botão de Envio de Ação */}
             <div className="pt-2">
-              <SubmitButton text="Criar Minha Conta" />
+              <SubmitButton
+                text="Criar Minha Conta"
+                feedbackText="Criando conta..."
+              />
             </div>
           </form>
 

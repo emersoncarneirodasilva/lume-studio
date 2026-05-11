@@ -113,7 +113,10 @@ export default async function EditProfileForm({
       </div>
 
       <div className="pt-4">
-        <SubmitButton text="Salvar Alterações" />
+        <SubmitButton
+          text="Salvar Alterações"
+          feedbackText="Salvando alterações..."
+        />
       </div>
     </form>
   );
