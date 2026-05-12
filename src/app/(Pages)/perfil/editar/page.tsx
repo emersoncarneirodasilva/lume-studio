@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import EditProfileForm from "@/src/components/Edit/EditProfileForm";
 import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
 import { Suspense } from "react"; // 1. Importe o Suspense
+import EditHero from "@/src/components/Profile/EditHero";
 
 export const metadata: Metadata = {
   title: "Lume Studio - Editar Perfil",
@@ -32,40 +33,10 @@ export default async function EditProfilePage() {
       <div className="container-lume">
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-12 lg:gap-24">
           {/* LADO ESQUERDO: Texto Editorial */}
-          <section className="flex-1 space-y-8 max-w-2xl">
-            <div className="space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-brand-gold-dark block">
-                Personalização
-              </span>
-              <div className="h-px w-8 bg-brand-gold-dark/30" />
-            </div>
-
-            <h1 className="text-5xl md:text-6xl text-foreground leading-[1.1] tracking-tight">
-              Atualize seus <br />
-              dados <span className="text-brand-gold-dark">pessoais.</span>
-            </h1>
-
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed font-light max-w-md">
-              Mantenha seu contato atualizado para receber confirmações de
-              agendamentos e novidades exclusivas. Se necessário, redefina sua
-              senha de acesso ao lado.
-            </p>
-
-            <Link
-              href="/perfil"
-              className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-brand-gold-dark transition-colors duration-300"
-            >
-              <ArrowLeft size={12} />
-              Voltar ao Perfil
-            </Link>
-          </section>
+          <EditHero />
 
           {/* LADO DIREITO: Card do Formulário */}
-          <section className="flex-1 relative w-full max-w-130 isolate">
-            <div className="hidden sm:block absolute -bottom-10 -left-10 w-50 h-50 bg-card-accent dark:bg-footer-bg rounded-3xl -z-10 opacity-100 transition-colors duration-300" />
-
-            <EditProfileForm user={user} token={token} />
-          </section>
+          <EditProfileForm user={user} token={token} />
         </div>
       </div>
     </main>
