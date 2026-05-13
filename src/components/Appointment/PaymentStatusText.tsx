@@ -9,7 +9,7 @@ export default function PaymentStatusText({
     PARTIALLY_PAID: { text: "text-sky-400", label: "Pago Parcial" },
     REFUNDED: {
       text: "text-muted-foreground/50",
-      label: "Reembolsado/Cancelado",
+      label: "Reembolsado / Cancelado",
     },
   };
 
