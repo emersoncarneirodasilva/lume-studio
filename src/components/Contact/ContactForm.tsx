@@ -37,7 +37,7 @@ export default function ContactForm() {
     const link = `https://wa.me/${numeroTelefone}?text=${texto}`;
 
     // 1. Abre o WhatsApp
-    window.open(link, "_blank");
+    window.open(link, "_blank", "noopener,noreferrer");
 
     // 2. Dispara o Toast de Sucesso (Estilo Premium)
     toast.success("Solicitação enviada com sucesso!", {

@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Pagination from "../Pagination";
 import { HelpCircle } from "lucide-react";
 import { Service } from "@/src/lib/api/fetchServices";
+import { formatDuration } from "@/src/utils/formatDuration";
+import { formatDetails } from "@/src/utils/formatDetails";
+import Pagination from "../Pagination";
 
 interface StepServiceProps {
   services: Service[];
@@ -15,13 +17,13 @@ export default function StepService({ services, onSelect }: StepServiceProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const servicesPerPage = 5;
 
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const categories = [
     "Todos",
     ...Array.from(
       new Set(services.map((s) => s.category?.name).filter(Boolean)),
     ),
   ];
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const filteredServices = services.filter((service) =>
     selectedCategory === "Todos"
@@ -36,34 +38,6 @@ export default function StepService({ services, onSelect }: StepServiceProps) {
     indexOfFirstService,
     indexOfLastService,
   );
-
-  const formatDuration = (min: number) => {
-    const hours = Math.floor(min / 60);
-    const remainingMinutes = min % 60;
-    return hours > 0
-      ? `${hours}h${remainingMinutes > 0 ? ` ${remainingMinutes}min` : ""}`
-      : `${min}min`;
-  };
-
-  // 🌟 Função para separar dinamicamente "Tipo" e "Descrição" vindos da API
-  const parseServiceDescription = (
-    rawDescription: string | null | undefined,
-  ) => {
-    if (!rawDescription) return { type: null, description: "" };
-
-    if (rawDescription.includes("|")) {
-      const parts = rawDescription.split("|");
-
-      // Limpa os prefixos "Tipo:" e "Descrição:" ignorando maiúsculas/minúsculas
-      const extractedType = parts[0].replace(/tipo:\s*/i, "").trim();
-      const extractedDesc = parts[1].replace(/descrição:\s*/i, "").trim();
-
-      return { type: extractedType, description: extractedDesc };
-    }
-
-    // Se não houver a barra '|', assume que o texto inteiro é a descrição
-    return { type: null, description: rawDescription.trim() };
-  };
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500 w-full">
@@ -119,9 +93,7 @@ export default function StepService({ services, onSelect }: StepServiceProps) {
       <div className="divide-y divide-card-border/30">
         {currentServices.map((service) => {
           // Extraindo os dados processados pelo JS para cada item do map
-          const { type, description } = parseServiceDescription(
-            service.description,
-          );
+          const { type, description } = formatDetails(service.description);
 
           return (
             <div

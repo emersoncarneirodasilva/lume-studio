@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import StepService from "./StepService";
 import StepProfessional from "./StepProfessional";
 import StepDateTime from "./StepDateTime";
-import { Service } from "@/src/lib/api/fetchServices";
+import { UserProfile } from "@/src/lib/api/fetchMyProfile";
+import { generateConciergeWhatsAppLink } from "@/src/utils/appointment";
+
+export interface Service {
+  id: string;
+  name: string;
+  description?: string | null;
+  price: number;
+  duration?: number;
+}
 
 export interface Professional {
   id: string;
@@ -19,24 +29,25 @@ interface SelectionState {
   professional: Professional | null;
 }
 
-const LUME_CONCIERGE_PHONE = "84988599843";
-
 interface AppointmentWrapperProps {
-  initialServices: Service[];
-  token: string; // 🌟 1. Recebe o token vindo com segurança do Server Component (page.tsx)
+  initialServices: any[];
+  token: string;
+  user?: UserProfile | null;
 }
 
 export default function AppointmentWrapper({
   initialServices,
-  token, // 🌟 2. Desestrutura a nova prop
+  token,
+  user,
 }: AppointmentWrapperProps) {
+  const router = useRouter();
   const [step, setStep] = useState<number>(1);
   const [selection, setSelection] = useState<SelectionState>({
     service: null,
     professional: null,
   });
 
-  const handleServiceSelect = (service: Service) => {
+  const handleServiceSelect = (service: any) => {
     setSelection((prev) => ({ ...prev, service }));
     setStep(2);
   };
@@ -49,40 +60,36 @@ export default function AppointmentWrapper({
   const handleFinish = (dateFormatted: string, hour: string) => {
     const { service, professional } = selection;
 
-    const formattedPrice = service?.price
-      ? service.price.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        })
-      : "";
+    // Gera o link usando a utilidade componentizada externa
+    const whatsappUrl = generateConciergeWhatsAppLink({
+      service,
+      professional,
+      user,
+      dateFormatted,
+      hour,
+    });
+
+    if (!whatsappUrl) {
+      toast.error("Ocorreu um erro ao gerar o link de agendamento.");
+      return;
+    }
 
     toast.success("Horário reservado com sucesso!", {
       description: `Encaminhando você para o Concierge Lume...`,
-      duration: 4000,
+      duration: 3500,
     });
 
-    const msg =
-      `*SOLICITAÇÃO DE AGENDAMENTO | LUME STUDIO*\n\n` +
-      `Olá. Selecionei um serviço através do site e desejo confirmar minha reserva:\n\n` +
-      `*Serviço:* ${service?.name}\n` +
-      `*Valor:* ${formattedPrice}\n` +
-      `*Especialista:* ${professional?.name}\n` +
-      `*Data:* ${dateFormatted}\n` +
-      `*Horário:* ${hour}\n\n` +
-      `Aguardo as instruções para finalização do agendamento.`;
-
     setTimeout(() => {
-      window.open(
-        `https://wa.me/55${LUME_CONCIERGE_PHONE}?text=${encodeURIComponent(msg)}`,
-        "_blank",
-      );
-    }, 800);
+      // 1. Abre o WhatsApp de forma segura e evita bloqueios de pop-up no mobile
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+      // 2. Redireciona o usuário de volta para a Home do site de forma suave
+      router.push("/");
+    }, 1200);
   };
 
   return (
     <div className="relative w-full">
-      <Toaster position="bottom-right" richColors closeButton />
-
       {/* PASSO 1: Catálogo Executivo com Dados Reais */}
       {step === 1 && (
         <StepService
@@ -91,21 +98,22 @@ export default function AppointmentWrapper({
         />
       )}
 
-      {/* PASSO 2: Seleção de Especialistas filtrados por serviço via API */}
+      {/* PASSO 2: Seleção de Especialistas */}
       {step === 2 && selection.service && (
         <StepProfessional
           serviceId={selection.service.id}
-          token={token} // 🌟 3. Injeta o token com segurança no fetch do cliente
+          token={token}
           onSelect={handleProfessionalSelect}
           onBack={() => setStep(1)}
         />
       )}
 
-      {/* PASSO 3: Calendário Limpo do Profissional */}
+      {/* PASSO 3: Calendário do Profissional */}
       {step === 3 && selection.professional && (
         <StepDateTime
           professionalId={selection.professional.id}
           professionalName={selection.professional.name}
+          token={token}
           onBack={() => setStep(2)}
           onFinish={handleFinish}
         />
