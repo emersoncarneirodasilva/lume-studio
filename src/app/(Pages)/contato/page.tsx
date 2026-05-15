@@ -1,6 +1,13 @@
+import { Metadata } from "next";
 import ContactForm from "@/src/components/Contact/ContactForm";
 import ContactHero from "@/src/components/Contact/ContactHero";
 import ContactSidebar from "@/src/components/Contact/ContactSidebar";
+
+export const metadata: Metadata = {
+  title: "Fale Conosco | Lume Studio",
+  description:
+    "Encontre nossos canais de atendimento, localização e horários. Fale com a equipe do Lume Studio e reserve seu momento de cuidado.",
+};
 
 export default function ContactPage() {
   return (

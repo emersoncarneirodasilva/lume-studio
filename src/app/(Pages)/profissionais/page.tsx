@@ -1,7 +1,14 @@
+import { Metadata } from "next";
 import ProfessionalsCTA from "@/src/components/Professionals/ProfessionalsCTA";
 import ProfessionalsGrid from "@/src/components/Professionals/ProfessionalsGrid";
 import ProfessionalsHero from "@/src/components/Professionals/ProfessionalsHero";
 import fetchProfessionals from "@/src/lib/api/fetchProfessionals";
+
+export const metadata: Metadata = {
+  title: "Nossos Profissionais | Lume Studio",
+  description:
+    "Conheça os talentos por trás do Lume Studio. Uma equipe selecionada para cuidar de você com exclusividade e alta performance.",
+};
 
 export default async function ProfessionalsPage({
   searchParams,

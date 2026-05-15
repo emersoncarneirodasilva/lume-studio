@@ -70,15 +70,15 @@ export default function NotificationCard({
           {!isRead ? (
             <button
               onClick={markAsRead}
-              className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold text-brand-gold-dark hover:text-brand-gold-light transition-colors cursor-pointer shrink-0"
+              className="flex items-center gap-1.5 text-[8px] sm:text-[10px] uppercase tracking-widest font-bold text-brand-gold-dark hover:text-brand-gold-light transition-colors cursor-pointer shrink-0"
             >
-              <Check size={14} />
-              Marcar como lida
+              <Check size={12} className="sm:w-3.5 sm:h-3.5" />
+              Marcar como vista
             </button>
           ) : (
-            <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60 shrink-0 select-none">
-              <Check size={14} className="text-emerald-500" />
-              Lido
+            <span className="flex items-center gap-1.5 text-[8px] sm:text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60 shrink-0 select-none">
+              <Check size={12} className="sm:w-3.5 sm:h-3.5 text-emerald-500" />
+              Lida
             </span>
           )}
         </div>

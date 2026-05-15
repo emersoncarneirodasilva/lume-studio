@@ -8,7 +8,9 @@ import NotificationsHero from "@/src/components/Notifications/NotificationsHero"
 import NotificationFilters from "@/src/components/Notifications/NotificationFilters";
 
 export const metadata: Metadata = {
-  title: "Lume Studio - Notificações",
+  title: "Minhas Novidades | Lume Studio",
+  description:
+    "Sua central de avisos e atualizações. Acompanhe seus lembretes de bem-estar e novidades do Lume Studio em tempo real.",
 };
 
 export default async function NotificationsPage({

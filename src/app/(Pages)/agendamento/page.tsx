@@ -1,8 +1,15 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { fetchAllServices } from "@/src/lib/api/fetchAllServices";
 import AppointmentWrapper from "@/src/components/Appointment/AppointmentWrapper";
 import fetchMyProfile, { UserProfile } from "@/src/lib/api/fetchMyProfile";
+
+export const metadata: Metadata = {
+  title: "Reservar Horário | Lume Studio",
+  description:
+    "Escolha seu serviço, selecione o melhor momento e reserve sua experiência de beleza exclusiva no Lume Studio.",
+};
 
 export default async function AppointmentPage() {
   const response = await fetchAllServices();

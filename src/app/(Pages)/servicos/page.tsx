@@ -1,8 +1,15 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import ServicesWrapper from "@/src/components/Services/ServicesWrapper";
 import fetchServices, {
   FetchServicesResponse,
 } from "@/src/lib/api/fetchServices";
+
+export const metadata: Metadata = {
+  title: "Nossos Serviços | Lume Studio",
+  description:
+    "Sinta a luz do Lume Studio através de nossos serviços. Descubra tratamentos personalizados para realçar sua beleza natural.",
+};
 
 export default async function ServicesPage({
   searchParams,

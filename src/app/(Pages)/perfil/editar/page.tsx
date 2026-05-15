@@ -1,16 +1,15 @@
-import { cookies } from "next/headers";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import fetchMyProfile, { UserProfile } from "@/src/lib/api/fetchMyProfile";
+import { Suspense } from "react";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
+import fetchMyProfile, { UserProfile } from "@/src/lib/api/fetchMyProfile";
 import EditProfileForm from "@/src/components/Edit/EditProfileForm";
 import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
-import { Suspense } from "react"; // 1. Importe o Suspense
 import EditHero from "@/src/components/Profile/EditHero";
 
 export const metadata: Metadata = {
-  title: "Lume Studio - Editar Perfil",
-  description: "Página de edição do perfil do usuário.",
+  title: "Editar Meus Dados | Lume Studio",
+  description:
+    "Atualize suas informações de contato e personalize sua experiência no Lume Studio.",
 };
 
 export default async function EditProfilePage() {

@@ -103,7 +103,7 @@ export default function AppointmentsCard({
           )}
         </div>
 
-        <span className="text-2xl md:text-3xl text-foreground font-semibold tracking-tight">
+        <span className="text-md sm:text-2xl md:text-3xl text-foreground font-semibold tracking-tight">
           {finalPrice.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",

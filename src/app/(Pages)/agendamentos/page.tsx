@@ -1,10 +1,17 @@
+import Link from "next/link";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AlertCircle, History } from "lucide-react";
-import Link from "next/link";
 import fetchAppointments from "@/src/lib/api/fetchAppointments";
 import AppointmentsHero from "@/src/components/Appointment/AppointmentsHero";
 import AppointmentsCard from "@/src/components/Appointment/AppointmentsCard";
 import Pagination from "@/src/components/Pagination";
+
+export const metadata: Metadata = {
+  title: "Meus Agendamentos | Lume Studio",
+  description:
+    "Acompanhe seu histórico de cuidados e confira seus próximos momentos de bem-estar reservados no Lume Studio.",
+};
 
 export const dynamic = "force-dynamic";
 
