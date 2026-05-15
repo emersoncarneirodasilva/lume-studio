@@ -7,7 +7,7 @@ import StepService from "./StepService";
 import StepProfessional from "./StepProfessional";
 import StepDateTime from "./StepDateTime";
 import { UserProfile } from "@/src/lib/api/fetchMyProfile";
-import { generateConciergeWhatsAppLink } from "@/src/utils/appointment";
+import { generateConciergeWhatsAppLink } from "@/src/utils/generateConciergeWhatsAppLink";
 
 export interface Service {
   id: string;
@@ -75,7 +75,7 @@ export default function AppointmentWrapper({
     }
 
     toast.success("Horário reservado com sucesso!", {
-      description: `Encaminhando você para o Concierge Lume...`,
+      description: `Conectando você ao Concierge Lume para finalizar seu agendamento...`,
       duration: 3500,
     });
 

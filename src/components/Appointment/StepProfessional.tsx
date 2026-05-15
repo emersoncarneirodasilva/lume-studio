@@ -7,7 +7,7 @@ import fetchProfessionalsOnService, {
 } from "@/src/lib/api/fetchProfessionalsOnService";
 import { Professional } from "./AppointmentWrapper";
 import { parseBio } from "@/src/utils/parseBio";
-
+import AnimateSpin from "../Spin/AnimateSpin";
 interface StepProfessionalProps {
   serviceId: string;
   token: string;
@@ -50,11 +50,7 @@ export default function StepProfessional({
   }, [serviceId, token]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-32">
-        <div className="w-6 h-6 border border-brand-gold/20 border-t-brand-gold rounded-full animate-spin" />
-      </div>
-    );
+    return <AnimateSpin />;
   }
 
   return (

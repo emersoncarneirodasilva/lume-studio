@@ -6,6 +6,7 @@ import {
   generateSlots,
   generateAvailableMonths,
 } from "@/src/utils/calendar";
+import AnimateSpin from "../Spin/AnimateSpin";
 
 interface AvailabilityBlock {
   id: string;
@@ -181,9 +182,7 @@ export default function StepDateTime({
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-32">
-          <div className="w-6 h-6 border border-brand-gold/20 border-t-brand-gold rounded-full animate-spin" />
-        </div>
+        <AnimateSpin />
       ) : error ? (
         <div className="text-center py-20 border border-card-border rounded-xl">
           <p className="text-sm text-muted-foreground font-light">{error}</p>

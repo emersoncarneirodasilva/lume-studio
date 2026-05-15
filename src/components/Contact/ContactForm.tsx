@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -21,31 +21,40 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleWhatsAppSend = (e: React.FormEvent) => {
+  const handleWhatsAppSend = (
+    e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) => {
     e.preventDefault();
 
-    const numeroTelefone = "5584988599843";
+    const phone = process.env.NEXT_PUBLIC_PHONE;
 
-    const texto =
-      `*Nova Consulta - Lume Studio*%0A%0A` +
-      `*Nome:* ${formData.nome}%0A` +
-      `*E-mail:* ${formData.email}%0A` +
-      `*Serviço:* ${formData.natureza}%0A` +
-      `*Prazo:* ${formData.prazo}%0A%0A` +
-      `*Visão Criativa:*%0A${formData.mensagem}`;
+    // 1. Criamos a mensagem sem espaços de indentação do código
+    const msg = [
+      `*Nova Consulta - Lume Studio*`,
+      ` `, // Linha vazia
+      `*Nome:* ${formData.nome}`,
+      `*E-mail:* ${formData.email}`,
+      `*Serviço:* ${formData.natureza}`,
+      `*Prazo:* ${formData.prazo}`,
+      ` `,
+      `*Visão Criativa:*`,
+      `${formData.mensagem}`,
+    ].join("\n"); // Unimos com \n que o encodeURIComponent transformará em quebra de linha real
 
-    const link = `https://wa.me/${numeroTelefone}?text=${texto}`;
+    // 2. Usamos o link oficial do WhatsApp (api.whatsapp.com é mais estável que wa.me para textos longos)
+    const encodedMsg = encodeURIComponent(msg);
+    const link = `https://api.whatsapp.com/send?phone=55${phone}&text=${encodedMsg}`;
 
-    // 1. Abre o WhatsApp
+    // 3. Abre o WhatsApp
     window.open(link, "_blank", "noopener,noreferrer");
 
-    // 2. Dispara o Toast de Sucesso (Estilo Premium)
-    toast.success("Solicitação enviada com sucesso!", {
-      description: "Iniciando seu atendimento no WhatsApp...",
+    // 4. Toast de Sucesso
+    toast.success("Solicitação enviada!", {
+      description: "Conectando você ao Concierge Lume...",
       duration: 4000,
     });
 
-    // 3. Reseta o formulário
+    // 5. Reseta o formulário
     setFormData({
       nome: "",
       email: "",
@@ -60,9 +69,6 @@ export default function ContactForm() {
       id="consultoria"
       className="bg-card-primary rounded-lg p-8 md:p-12 shadow-sm border border-card-border transition-colors duration-300 h-full scroll-mt-48"
     >
-      {/* Toaster posicionado no canto inferior direito */}
-      <Toaster position="bottom-right" richColors closeButton />
-
       <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-10">
         Inicie sua Consulta
       </h2>
@@ -132,7 +138,9 @@ export default function ContactForm() {
                   <option value="Massagem Relaxante">
                     Massagem Relaxante Lume
                   </option>
-                  <option value="Drenagem Linfática">Drenagem Linfática</option>
+                  <option value="Massagem Facial">
+                    Massagem Facial e Revitalização
+                  </option>
                 </optgroup>
 
                 <optgroup label="Estética & Unhas">
