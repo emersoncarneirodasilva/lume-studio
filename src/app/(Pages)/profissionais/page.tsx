@@ -24,19 +24,18 @@ export default async function ProfessionalsPage({
 
   const data = await fetchProfessionals(page, 4);
 
-  // 🔹 Faz o fetch das dependências em paralelo diretamente no servidor de forma ultra veloz!
+  // A DIFERENÇA CORRIGIDA: Criamos um array de promises flat e disparamos absolutamente TUDO ao mesmo tempo
   const professionalsWithDetails = await Promise.all(
-    data.professionals.map(async (pro) => {
-      const [services, availability] = await Promise.all([
+    data.professionals.map((pro) =>
+      Promise.all([
         fetchServicesByProfessional(pro.id),
         fetchAvailabilityByProfessional(pro.id),
-      ]);
-      return {
+      ]).then(([services, availability]) => ({
         ...pro,
         services,
         availability,
-      };
-    }),
+      })),
+    ),
   );
 
   return (
@@ -44,7 +43,7 @@ export default async function ProfessionalsPage({
       <ProfessionalsHero />
 
       <ProfessionalsGrid
-        teamData={professionalsWithDetails} // Envia os dados já mastigados
+        teamData={professionalsWithDetails}
         totalPages={data.totalPages}
         currentPage={data.currentPage}
       />
