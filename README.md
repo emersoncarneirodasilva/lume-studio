@@ -21,14 +21,13 @@ Uma imersão completa na filosofia do estúdio através de seções e páginas d
 * `Rituais para a Estética Moderna:` Página de catálogo dinâmico alimentada via API, com filtros interativos por categoria (Estética, Unhas, Cabelos, Maquiagem).
 * `Os Artesãos:` Página dedicada a apresentar o perfil editorial dos especialistas do salão com dados e avatares dinâmicos.
 
-![Home do Lume Studio](./public/screenshots/home.png)
-![Catálogo Editorial](./public/screenshots/services-catalog.png)
-![Os Artesãos](./public/screenshots/professionals.png)
-
+<img width="1880" height="911" alt="Captura de tela 2026-05-14 234428" src="https://github.com/user-attachments/assets/d3671f4a-56fb-4d94-b96b-e224b6edbd57" /><img width="1881" height="893" alt="Captura de tela 2026-05-15 231743" src="https://github.com/user-attachments/assets/f7ae5ea4-5238-4d70-95d8-ee597d76ac0f" />
+<img width="1867" height="900" alt="Captura de tela 2026-05-15 231809" src="https://github.com/user-attachments/assets/bbf33001-c291-44ed-822b-66f7e18b806a" />
+ 
 ### ✦ 2. Conecte-se Conosco (Consultas Customizadas)
 Página de contato estruturada de forma sofisticada para iniciar consultas personalizadas, alinhando expectativas de atendimento e prazos.
 
-![Página de Contato](./public/screenshots/contact.png)
+<img width="1882" height="902" alt="Captura de tela 2026-05-15 232117" src="https://github.com/user-attachments/assets/6b8e811b-8cb1-4239-aa7b-66255c305b5b" />
 
 ### ✦ 3. Área do Cliente & Jornada de Agendamento (Concierge)
 O coração operacional do sistema, onde o usuário gerencia sua jornada e monta seu atendimento personalizado.
@@ -37,9 +36,11 @@ O coração operacional do sistema, onde o usuário gerencia sua jornada e monta
 * `Central de Alertas & Notificações:` Listagem dinâmica com busca textual, paginação e filtros de status de agendamentos em tempo real.
 * `Perfil do Membro:` Página de gerenciamento de informações pessoais e dados de contato seguros.
 
-![Painel de Agendamentos](./public/screenshots/dashboard-client.png)
-![Central de Notificações](./public/screenshots/notifications.png)
-![Perfil do Usuário](./public/screenshots/profile.png)
+<img width="1877" height="897" alt="Captura de tela 2026-05-15 232219" src="https://github.com/user-attachments/assets/dfe4fc66-a786-4984-a2b6-4cc340689e2d" />
+<img width="1887" height="906" alt="Captura de tela 2026-05-15 232135" src="https://github.com/user-attachments/assets/9243954d-3ad9-4447-88be-201a8dcd366a" />
+<img width="1881" height="902" alt="Captura de tela 2026-05-15 232150" src="https://github.com/user-attachments/assets/6b0167b4-06a4-4ea6-978a-cc158623b15f" />
+<img width="1877" height="900" alt="Captura de tela 2026-05-15 232202" src="https://github.com/user-attachments/assets/9b242ae8-8a6d-4103-83b4-1736742c77de" />
+
 
 ---
 
