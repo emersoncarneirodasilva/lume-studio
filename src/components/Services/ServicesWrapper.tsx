@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import ServicesHero from "./ServicesHero";
 import ServicesGrid from "./ServicesGrid";
 import ServicesCTA from "./ServicesCTA";
-import { fetchAllServices } from "@/src/lib/api/fetchAllServices";
-import { Service as ApiService } from "@/src/app/interfaces";
+import AnimateSpin from "../Spin/AnimateSpin";
 
 export interface Service {
   title: string;
@@ -20,75 +20,63 @@ interface ServicesWrapperProps {
   initialServices: Service[];
   totalPages: number;
   currentPage: number;
+  activeCategory: string;
+  serverCategories: string[];
 }
 
 export default function ServicesWrapper({
   initialServices,
   totalPages,
   currentPage,
+  activeCategory,
+  serverCategories,
 }: ServicesWrapperProps) {
-  const [activeCategory, setActiveCategory] = useState("Todos");
-  const [allServices, setAllServices] = useState<Service[] | null>(null);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-  // 🔹 Buscar TODOS os serviços (uma única vez)
-  useEffect(() => {
-    fetchAllServices().then((data) => {
-      const mapped: Service[] = data.services.map((service: ApiService) => ({
-        title: service.name,
-        price: new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(service.price),
-        time: `${service.duration} MIN`,
-        category: service.category.name,
-        image: service.imageUrl,
-        desc: service.description,
-      }));
+  const handleFilterChange = (category: string) => {
+    startTransition(() => {
+      const params = new URLSearchParams();
+      params.set("page", "1");
 
-      setAllServices(mapped);
-    });
-  }, []);
-
-  // 🔹 Categorias dinâmicas (corrigidas)
-  const categories = useMemo(() => {
-    const source = allServices || initialServices;
-
-    const map = new Map<string, string>();
-
-    source.forEach((s) => {
-      const key = s.category.trim().toLowerCase();
-
-      if (!map.has(key)) {
-        map.set(key, s.category); // mantém original
+      if (category.toLowerCase() !== "todos") {
+        params.set("category", category.toLowerCase());
       }
+
+      router.push(`/servicos?${params.toString()}`);
     });
-
-    return ["Todos", ...Array.from(map.values())];
-  }, [initialServices, allServices]);
-
-  // 🔹 Decide quais serviços usar
-  const servicesToUse =
-    activeCategory === "Todos"
-      ? initialServices
-      : allServices?.filter(
-          (s) =>
-            s.category.trim().toLowerCase() === activeCategory.toLowerCase(),
-        ) || [];
+  };
 
   return (
-    <main>
+    <main className="relative min-h-screen">
+      {/* 🔹 Camada de Loading fixa na tela inteira (Full Screen Overlay) */}
+      {isPending && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <AnimateSpin />
+        </div>
+      )}
+
       <ServicesHero
         currentFilter={activeCategory}
-        onFilterChange={setActiveCategory}
-        categories={categories}
+        onFilterChange={handleFilterChange}
+        categories={serverCategories}
       />
 
-      <ServicesGrid
-        activeCategory={activeCategory}
-        services={servicesToUse}
-        totalPages={totalPages}
-        currentPage={currentPage}
-      />
+      {/* Conteúdo com opacidade reduzida enquanto carrega de forma suave */}
+      <div
+        className={`transition-all duration-500 ease-in-out ${
+          isPending
+            ? "opacity-30 pointer-events-none blur-[2px]"
+            : "opacity-100"
+        }`}
+      >
+        <ServicesGrid
+          activeCategory={activeCategory}
+          services={initialServices}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      </div>
 
       <ServicesCTA />
     </main>

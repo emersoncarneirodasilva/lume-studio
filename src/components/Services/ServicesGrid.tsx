@@ -1,17 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Pagination from "../Pagination";
 import { Service } from "./ServicesWrapper";
+import PaginationWithFilters from "../Pagination/PaginationWithFilters";
 
 // 🔹 Parser da descrição
 function parseServiceDescription(description: string) {
   const parts = description.split(" | ");
-
   const type = parts[0]?.replace("Tipo: ", "").trim() || "";
-
   const desc = parts[1]?.replace("Descrição: ", "").trim() || "";
-
   return { type, desc };
 }
 
@@ -23,16 +20,11 @@ interface ServicesGridProps {
 }
 
 export default function ServicesGrid({
-  activeCategory,
   services,
   totalPages,
   currentPage,
 }: ServicesGridProps) {
-  // 🔹 Apenas filtra (SEM paginar aqui)
-  const filteredServices =
-    activeCategory === "Todos"
-      ? services
-      : services.filter((s) => s.category === activeCategory);
+  // 🔹 Removido o filtro manual daqui! O array "services" já vem pronto e filtrado do Server Component.
 
   return (
     <section
@@ -41,11 +33,11 @@ export default function ServicesGrid({
     >
       <div className="container-lume">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-32 lg:gap-y-40">
-          {filteredServices.map((service, index) => {
+          {services.map((service, index) => {
             const isMiddleInFirstRow = index === 1;
             const isMiddleInSecondRow = index === 4;
 
-            // 🔹 Aqui acontece o parse
+            // 🔹 Renderização do Parse da descrição
             const { type, desc } = parseServiceDescription(service.desc);
 
             return (
@@ -105,13 +97,11 @@ export default function ServicesGrid({
           })}
         </div>
 
-        {activeCategory === "Todos" && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            basePath="/servicos"
-          />
-        )}
+        {/* 🔹 Nova paginação inteligente que resolve o problema da URL automaticamente */}
+        <PaginationWithFilters
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
       </div>
     </section>
   );

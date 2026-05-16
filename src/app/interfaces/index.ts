@@ -11,3 +11,4 @@ export * from "./ServiceOnProfessional";
 export * from "./CreateUserPayload";
 export * from "./ChangePassword";
 export * from "./UpdateProfile";
+export * from "./FetchCategoriesResponse";

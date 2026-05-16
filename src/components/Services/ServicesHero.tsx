@@ -32,31 +32,37 @@ export default function ServicesHero({
           {/* Descrição */}
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed font-light">
             Uma coleção de serviços exclusivos onde tradição e inovação se
-            encontram. Cada detalhe é pensado para criar uma experiência única e
+            encontram. Cada detalhe é pensado para criar uma experience única e
             personalizada, elevando o cuidado pessoal ao status de arte.
           </p>
         </div>
 
         {/* Barra de Filtros */}
         <div className="mt-16 flex flex-wrap gap-4 border-b border-card-border pb-8">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => onFilterChange(cat)}
-              className={`relative px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 group cursor-pointer
-                ${
-                  currentFilter === cat
-                    ? "text-brand-gold-dark"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-            >
-              {cat}
-              {/* Linha indicadora de seleção ativa */}
-              {currentFilter === cat && (
-                <span className="absolute bottom-0 lg:-bottom-8.25 left-0 w-full h-0.5 bg-brand-gold-dark z-10" />
-              )}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            // 🔹 Comparação segura em LowerCase para não bugar com a URL
+            const isSelected =
+              currentFilter.toLowerCase() === cat.toLowerCase();
+
+            return (
+              <button
+                key={cat}
+                onClick={() => onFilterChange(cat)}
+                className={`relative px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 group cursor-pointer
+                  ${
+                    isSelected
+                      ? "text-brand-gold-dark"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+              >
+                {cat}
+                {/* Linha indicadora de seleção ativa */}
+                {isSelected && (
+                  <span className="absolute bottom-0 lg:-bottom-8.25 left-0 w-full h-0.5 bg-brand-gold-dark z-10" />
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>
