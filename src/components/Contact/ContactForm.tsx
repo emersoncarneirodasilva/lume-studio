@@ -26,12 +26,27 @@ export default function ContactForm() {
   ) => {
     e.preventDefault();
 
+    // 1. Buscamos a variável injetada de forma segura pela Vercel
     const phone = process.env.NEXT_PUBLIC_PHONE;
 
-    // 1. Criamos a mensagem sem espaços de indentação do código
+    // 2. Se a Vercel não injetou a variável, barramos o envio e avisamos no Toast
+    // sem expor número nenhum no código fonte!
+    if (!phone) {
+      toast.error("Erro de configuração", {
+        description:
+          "O canal de atendimento do Concierge está indisponível no momento. Tente novamente mais tarde.",
+        duration: 5000,
+      });
+      return;
+    }
+
+    // 3. Limpa caracteres se existirem (garantia)
+    const cleanPhone = phone.replace(/\D/g, "");
+
+    // 4. Monta a mensagem
     const msg = [
       `*Nova Consulta - Lume Studio*`,
-      ` `, // Linha vazia
+      ` `,
       `*Nome:* ${formData.nome}`,
       `*E-mail:* ${formData.email}`,
       `*Serviço:* ${formData.natureza}`,
@@ -39,22 +54,27 @@ export default function ContactForm() {
       ` `,
       `*Visão Criativa:*`,
       `${formData.mensagem}`,
-    ].join("\n"); // Unimos com \n que o encodeURIComponent transformará em quebra de linha real
+    ].join("\n");
 
-    // 2. Usamos o link oficial do WhatsApp (api.whatsapp.com é mais estável que wa.me para textos longos)
     const encodedMsg = encodeURIComponent(msg);
-    const link = `https://api.whatsapp.com/send?phone=55${phone}&text=${encodedMsg}`;
+    const link = `https://wa.me/55${cleanPhone}?text=${encodedMsg}`;
 
-    // 3. Abre o WhatsApp
-    window.open(link, "_blank", "noopener,noreferrer");
+    // 5. Simula o clique físico para burlar o bloqueador de pop-ups da Vercel
+    const a = document.createElement("a");
+    a.href = link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 
-    // 4. Toast de Sucesso
+    // 6. Toast de Sucesso
     toast.success("Solicitação enviada!", {
       description: "Conectando você ao Concierge Lume...",
       duration: 4000,
     });
 
-    // 5. Reseta o formulário
+    // 7. Reseta o formulário
     setFormData({
       nome: "",
       email: "",
