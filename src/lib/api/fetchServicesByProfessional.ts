@@ -1,26 +1,5 @@
-// 1. O objeto interno 'service'
-export interface PublicService {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  duration: number;
-  imageUrl: string;
-  categoryId: string;
-  salonId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { PublicService, ServiceOnProfessional } from "@/src/app/interfaces";
 
-// 2. O objeto que a API retorna na lista (a relação)
-export interface ServiceOnProfessional {
-  id: string;
-  serviceId: string;
-  professionalId: string;
-  service: PublicService;
-}
-
-// 3. A função de busca atualizada
 export default async function fetchServicesByProfessional(
   professionalId: string,
 ): Promise<PublicService[]> {

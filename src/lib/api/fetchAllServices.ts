@@ -1,4 +1,4 @@
-import { FetchServicesResponse } from "./fetchServices";
+import { FetchServicesResponse } from "@/src/app/interfaces";
 
 export async function fetchAllServices(): Promise<FetchServicesResponse> {
   const slug = process.env.NEXT_PUBLIC_SLUG;

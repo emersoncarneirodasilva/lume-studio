@@ -1,7 +1,4 @@
-export interface ChangePassword {
-  oldPassword: string;
-  newPassword: string;
-}
+import { ChangePassword } from "@/src/app/interfaces";
 
 export default async function putChangePassword(
   token: string,

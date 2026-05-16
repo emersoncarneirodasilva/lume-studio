@@ -1,7 +1,7 @@
 import { User, Phone, Lock } from "lucide-react";
-import { UserProfile } from "@/src/lib/api/fetchMyProfile";
 import SubmitButton from "@/src/components/Buttons/SubmitButton";
 import { updateUserAction } from "@/src/app/(Pages)/perfil/editar/actions/updateUserAction";
+import { UserProfile } from "@/src/app/interfaces";
 
 interface EditProfileFormProps {
   user: UserProfile;

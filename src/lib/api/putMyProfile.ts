@@ -1,7 +1,4 @@
-export interface UpdateProfile {
-  name?: string;
-  phone?: string;
-}
+import { UpdateProfile } from "@/src/app/interfaces";
 
 export default async function putMyProfile(token: string, data: UpdateProfile) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {

@@ -1,21 +1,4 @@
-export interface Professional {
-  id: string;
-  name: string;
-  bio: string;
-  avatarUrl: string | null;
-  email: string;
-  phone: string;
-  createdAt: string;
-  updatedAt: string;
-  salonId: string;
-}
-
-export interface ProfessionalOnService {
-  id: string;
-  serviceId: string;
-  professionalId: string;
-  professional: Professional;
-}
+import { ProfessionalOnService } from "@/src/app/interfaces";
 
 export default async function fetchProfessionalsOnService(
   token: string,

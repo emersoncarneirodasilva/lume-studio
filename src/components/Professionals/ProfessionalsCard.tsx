@@ -3,16 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Clock, Info } from "lucide-react";
-import fetchServicesByProfessional, {
-  PublicService,
-} from "@/src/lib/api/fetchServicesByProfessional";
-import fetchAvailabilityByProfessional, {
-  Availability,
-} from "@/src/lib/api/fetchAvailabilityByProfessional";
+import fetchServicesByProfessional from "@/src/lib/api/fetchServicesByProfessional";
+import fetchAvailabilityByProfessional from "@/src/lib/api/fetchAvailabilityByProfessional";
 import {
   daysMapFull,
   formatAvailability,
 } from "@/src/utils/formatAvailability";
+import { Availability, PublicService } from "@/src/app/interfaces";
 
 interface ProfessionalsCardProps {
   id: string;

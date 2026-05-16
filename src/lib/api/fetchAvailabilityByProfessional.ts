@@ -1,10 +1,4 @@
-export interface Availability {
-  id: string;
-  professionalId: string;
-  weekday: number;
-  startTime: string;
-  endTime: string;
-}
+import { Availability } from "@/src/app/interfaces";
 
 export default async function fetchAvailabilityByProfessional(
   professionalId: string,

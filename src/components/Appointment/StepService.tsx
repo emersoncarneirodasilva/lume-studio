@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { HelpCircle } from "lucide-react";
-import { Service } from "@/src/lib/api/fetchServices";
 import { formatDuration } from "@/src/utils/formatDuration";
 import { formatDetails } from "@/src/utils/formatDetails";
 import Pagination from "../Pagination";
+import { Service } from "@/src/app/interfaces";
 
 interface StepServiceProps {
   services: Service[];

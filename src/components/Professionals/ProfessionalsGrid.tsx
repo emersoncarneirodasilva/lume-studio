@@ -1,8 +1,8 @@
 "use client";
 
+import { parseProfessionalBio } from "@/src/utils/parseProfessionalBio";
 import ProfessionalsCard from "./ProfessionalsCard";
 import Pagination from "../Pagination";
-import { parseProfessionalBio } from "@/src/utils/parseProfessionalBio";
 
 export interface ProfessionalGridItem {
   id: string;

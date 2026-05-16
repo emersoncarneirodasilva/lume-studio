@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Lock } from "lucide-react";
-import SubmitButton from "../Buttons/SubmitButton";
 import { resetPasswordAction } from "@/src/app/(credentials)/redefinir-senha/[token]/actions/resetPasswordAction";
+import SubmitButton from "../Buttons/SubmitButton";
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   return (

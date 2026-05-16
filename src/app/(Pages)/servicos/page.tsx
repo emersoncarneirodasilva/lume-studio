@@ -1,9 +1,8 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { FetchServicesResponse } from "../../interfaces";
 import ServicesWrapper from "@/src/components/Services/ServicesWrapper";
-import fetchServices, {
-  FetchServicesResponse,
-} from "@/src/lib/api/fetchServices";
+import fetchServices from "@/src/lib/api/fetchServices";
 
 export const metadata: Metadata = {
   title: "Nossos Serviços | Lume Studio",

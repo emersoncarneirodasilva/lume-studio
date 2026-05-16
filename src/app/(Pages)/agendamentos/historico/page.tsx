@@ -1,15 +1,37 @@
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AlertCircle } from "lucide-react";
 import fetchAppointmentsHistory from "@/src/lib/api/fetchAppointmentsHistory";
 import AppointmentsCard from "@/src/components/Appointment/AppointmentsCard";
 import Pagination from "@/src/components/Pagination";
 import AppointmentsHistoryHero from "@/src/components/AppointmentsHistory/AppointmentsHistoryHero";
-import { Appointment } from "@/src/lib/api/fetchAppointments";
+import { Appointment } from "@/src/app/interfaces";
+import fetchProfessionals from "@/src/lib/api/fetchProfessionals";
+import fetchServices from "@/src/lib/api/fetchServices";
+
+export const metadata: Metadata = {
+  title: "Histórico de Agendamentos | Lume Studio",
+  description:
+    "Acompanhe seu histórico de cuidados e confira seus momentos de bem-estar reservados no Lume Studio.",
+};
 
 export const dynamic = "force-dynamic";
 
 interface PageProps {
   searchParams: Promise<{ page?: string }>;
+}
+
+interface APIModelService {
+  id: string;
+  name: string;
+  price: number;
+  duration: number;
+}
+
+interface APIModelProfessional {
+  id: string;
+  name: string;
+  avatarUrl: string | null;
 }
 
 export default async function AppointmentsHistoryPage({
@@ -30,17 +52,40 @@ export default async function AppointmentsHistoryPage({
     : 1;
   const LIMIT = 6;
 
-  // 3. Busca os dados reais do seu backend através da função que criamos
-  const { appointmentsHistory, totalPages } = await fetchAppointmentsHistory(
-    token,
-    currentPage,
-    LIMIT,
+  // 3. ⚡ BUSCA EM PARALELO: Dispara as 3 requisições ao mesmo tempo na rede
+  const [historyData, servicesData, professionalsData] = await Promise.all([
+    fetchAppointmentsHistory(token, currentPage, LIMIT),
+    fetchServices(1, 100),
+    fetchProfessionals(1, 100),
+  ]);
+
+  // Extrai os dados do histórico resolvido pela Promise
+  const { appointmentsHistory, totalPages } = historyData;
+
+  // Mapeamento baseado no retorno da sua API
+  const servicesList: APIModelService[] = servicesData?.services || [];
+  const professionalsList: APIModelProfessional[] =
+    professionalsData?.professionals || [];
+
+  // Criação dos mapas tipados para garantir busca instantânea O(1)
+  const serviceMap = new Map<string, string>(
+    servicesList.map((s) => [s.id, s.name]),
+  );
+
+  const professionalMap = new Map<
+    string,
+    { name: string; avatarUrl: string | null }
+  >(
+    professionalsList.map((p) => [
+      p.id,
+      { name: p.name, avatarUrl: p.avatarUrl },
+    ]),
   );
 
   return (
     <main className="pt-40 pb-20 px-6 md:px-12 bg-background transition-colors duration-300">
       <div className="container-lume">
-        {/* Cabeçalho Atualizado com o Estilo Premium do AppointmentsHero */}
+        {/* Cabeçalho com o Estilo Premium do AppointmentsHero */}
         <AppointmentsHistoryHero />
 
         <section className="space-y-6">
@@ -70,7 +115,7 @@ export default async function AppointmentsHistoryPage({
                   id: historyItem.id,
                   status: historyItem.status,
 
-                  // 💡 Passamos a data com as 3 horas somadas convertida de volta para string ISO
+                  // Passamos a data com as 3 horas somadas convertida de volta para string ISO
                   scheduledAt: dateWithTimezone.toISOString(),
 
                   createdAt: historyItem.movedAt,
@@ -79,20 +124,29 @@ export default async function AppointmentsHistoryPage({
                   salonId: historyItem.salonId,
                   notifications: [],
                   payment: null,
-                  services: historyItem.services.map((srv) => ({
-                    id: srv.id,
-                    service: {
-                      id: srv.serviceId,
-                      name: "Serviço Realizado",
-                      price: srv.price,
-                      duration: srv.duration,
-                    },
-                    professional: {
-                      id: srv.professionalId,
-                      name: "Profissional",
-                      avatarUrl: null,
-                    },
-                  })),
+                  services: historyItem.services.map((srv) => {
+                    // Cruzamento dos dados estáticos mapeados por ID
+                    const realServiceName =
+                      serviceMap.get(srv.serviceId) || "Serviço Realizado";
+                    const realProfessional = professionalMap.get(
+                      srv.professionalId,
+                    );
+
+                    return {
+                      id: srv.id,
+                      service: {
+                        id: srv.serviceId,
+                        name: realServiceName,
+                        price: srv.price,
+                        duration: srv.duration,
+                      },
+                      professional: {
+                        id: srv.professionalId,
+                        name: realProfessional?.name || "Profissional",
+                        avatarUrl: realProfessional?.avatarUrl || null,
+                      },
+                    };
+                  }),
                 };
 
                 return (

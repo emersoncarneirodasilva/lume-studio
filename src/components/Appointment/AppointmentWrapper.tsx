@@ -6,8 +6,8 @@ import { toast } from "sonner";
 import StepService from "./StepService";
 import StepProfessional from "./StepProfessional";
 import StepDateTime from "./StepDateTime";
-import { UserProfile } from "@/src/lib/api/fetchMyProfile";
 import { generateConciergeWhatsAppLink } from "@/src/utils/generateConciergeWhatsAppLink";
+import { UserProfile } from "@/src/app/interfaces";
 
 export interface Service {
   id: string;

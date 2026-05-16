@@ -1,10 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Mail } from "lucide-react";
-import SubmitButton from "@/src/components/Buttons/SubmitButton";
 import { Suspense } from "react";
 import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
-import { handleForgotPassword } from "./actions/forgotAction";
 import ForgotPasswordForm from "@/src/components/ForgotPassword/ForgotPasswordForm";
 import ForgotPasswordImage from "@/src/components/ForgotPassword/ForgotPasswordImage";
 

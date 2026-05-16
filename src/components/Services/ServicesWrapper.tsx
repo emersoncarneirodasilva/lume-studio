@@ -5,7 +5,7 @@ import ServicesHero from "./ServicesHero";
 import ServicesGrid from "./ServicesGrid";
 import ServicesCTA from "./ServicesCTA";
 import { fetchAllServices } from "@/src/lib/api/fetchAllServices";
-import { Service as ApiService } from "@/src/lib/api/fetchServices";
+import { Service as ApiService } from "@/src/app/interfaces";
 
 export interface Service {
   title: string;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Edit3, Mail, Phone, User } from "lucide-react";
-import { UserProfile } from "@/src/lib/api/fetchMyProfile";
+import { UserProfile } from "@/src/app/interfaces";
 
 interface ProfileCardProps {
   user: UserProfile;

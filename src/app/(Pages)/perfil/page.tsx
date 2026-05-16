@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
-import fetchMyProfile, { UserProfile } from "@/src/lib/api/fetchMyProfile";
+import fetchMyProfile from "@/src/lib/api/fetchMyProfile";
 import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
 import ProfileHero from "@/src/components/Profile/ProfileHero";
 import ProfileCard from "@/src/components/Profile/ProfileCard";
+import { UserProfile } from "../../interfaces";
 
 export const metadata: Metadata = {
   title: "Meus Dados | Lume Studio",

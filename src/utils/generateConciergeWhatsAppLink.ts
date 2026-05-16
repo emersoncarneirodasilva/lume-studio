@@ -2,8 +2,8 @@ import {
   Service,
   Professional,
 } from "@/src/components/Appointment/AppointmentWrapper";
-import { UserProfile } from "@/src/lib/api/fetchMyProfile";
 import { formatDuration } from "@/src/utils/formatDuration";
+import { UserProfile } from "../app/interfaces";
 
 interface GenerateMessageProps {
   service: Service | null;

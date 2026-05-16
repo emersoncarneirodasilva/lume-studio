@@ -3,7 +3,8 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { fetchAllServices } from "@/src/lib/api/fetchAllServices";
 import AppointmentWrapper from "@/src/components/Appointment/AppointmentWrapper";
-import fetchMyProfile, { UserProfile } from "@/src/lib/api/fetchMyProfile";
+import fetchMyProfile from "@/src/lib/api/fetchMyProfile";
+import { UserProfile } from "../../interfaces";
 
 export const metadata: Metadata = {
   title: "Reservar Horário | Lume Studio",

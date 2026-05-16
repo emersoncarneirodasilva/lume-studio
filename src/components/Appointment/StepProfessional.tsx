@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import fetchProfessionalsOnService, {
-  ProfessionalOnService,
-} from "@/src/lib/api/fetchProfessionalsOnService";
+import fetchProfessionalsOnService from "@/src/lib/api/fetchProfessionalsOnService";
 import { Professional } from "./AppointmentWrapper";
 import { parseBio } from "@/src/utils/parseBio";
 import AnimateSpin from "../Spin/AnimateSpin";
+import { ProfessionalOnService } from "@/src/app/interfaces";
 interface StepProfessionalProps {
   serviceId: string;
   token: string;

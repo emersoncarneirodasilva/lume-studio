@@ -1,10 +1,4 @@
-export interface CreateUserPayload {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  salonId: string;
-}
+import { CreateUserPayload } from "@/src/app/interfaces";
 
 export async function postUser(payload: CreateUserPayload) {
   try {

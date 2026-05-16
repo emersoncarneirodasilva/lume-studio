@@ -1,23 +1,17 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Lock } from "lucide-react";
-import SubmitButton from "@/src/components/Buttons/SubmitButton";
 import { Suspense } from "react";
 import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
-import { resetPasswordAction } from "./actions/resetPasswordAction";
 import ResetPasswordForm from "@/src/components/ResetPassword/ResetPasswordForm";
 import ResetPasswordImage from "@/src/components/ResetPassword/ResetPasswordImage";
-
-// Tipagem para extrair o token da rota dinâmica do Next.js 13/14+
-interface ResetPasswordPageProps {
-  params: Promise<{ token: string }> | { token: string };
-}
 
 export const metadata = {
   title: "Lume Studio - Redefinir Senha",
   description:
     "Crie uma nova senha para acessar sua conta exclusiva no Lume Studio.",
 };
+
+interface ResetPasswordPageProps {
+  params: Promise<{ token: string }> | { token: string };
+}
 
 export default async function ResetPasswordPage({
   params,

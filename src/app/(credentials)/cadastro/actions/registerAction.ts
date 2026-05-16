@@ -1,7 +1,8 @@
 "use server";
 
+import { CreateUserPayload } from "@/src/app/interfaces";
 import { fetchSalonBySlug } from "@/src/lib/api/fetchSalonBySlug";
-import { CreateUserPayload, postUser } from "@/src/lib/api/postUser";
+import { postUser } from "@/src/lib/api/postUser";
 import { redirect } from "next/navigation";
 
 export async function registerUser(formData: FormData) {

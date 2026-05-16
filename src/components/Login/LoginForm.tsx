@@ -1,7 +1,7 @@
 import Link from "next/link";
-import SubmitButton from "../Buttons/SubmitButton";
 import { Mail, Lock } from "lucide-react";
 import { handleLogin } from "@/src/app/(credentials)/login/actions/loginAction";
+import SubmitButton from "../Buttons/SubmitButton";
 
 export default function LoginForm() {
   return (

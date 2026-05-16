@@ -1,10 +1,6 @@
 "use server";
 
-export type ApiResponse<T = unknown> = {
-  success: boolean;
-  message?: string;
-  data?: T;
-};
+import { ApiResponse } from "@/src/app/types";
 
 export async function putResetPassword(
   token: string,

@@ -1,6 +1,6 @@
-import fetchImagesByType from "@/src/lib/api/fetchImagesByType";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import fetchImagesByType from "@/src/lib/api/fetchImagesByType";
 
 export default async function OwnerSection() {
   const imagesData = await fetchImagesByType("Elena Vance (Home)");

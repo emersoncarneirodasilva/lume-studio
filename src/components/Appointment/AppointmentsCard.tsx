@@ -3,7 +3,7 @@ import { formatDate, formatDuration, formatTime } from "@/src/utils/dateTime";
 import StatusBadge from "./StatusBadge";
 import PaymentStatusText from "./PaymentStatusText";
 import PaymentMethodText from "./PaymentMethodText";
-import { Appointment } from "@/src/lib/api/fetchAppointments";
+import { Appointment } from "@/src/app/interfaces";
 
 interface AppointmentsCardProps {
   appointment: Appointment;

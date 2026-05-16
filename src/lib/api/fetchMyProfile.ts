@@ -1,10 +1,4 @@
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: "USER" | "ADMIN";
-}
+import { UserProfile } from "@/src/app/interfaces";
 
 export default async function fetchMyProfile(
   token: string,

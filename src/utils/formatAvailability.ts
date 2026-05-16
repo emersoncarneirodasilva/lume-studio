@@ -1,4 +1,4 @@
-import { Availability } from "../lib/api/fetchAvailabilityByProfessional";
+import { Availability } from "../app/interfaces";
 
 export const daysMapFull: Record<number, string> = {
   0: "Domingo",
