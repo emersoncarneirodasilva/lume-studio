@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     "Conheça os talentos por trás do Lume Studio. Uma equipe selecionada para cuidar de você com exclusividade e alta performance.",
 };
 
+// 🔹 Garante que a Vercel busque dados frescos (como horários e disponibilidades) a cada acesso, ignorando o cache estático nesta rota
+export const revalidate = 0;
+
 export default async function ProfessionalsPage({
   searchParams,
 }: {
