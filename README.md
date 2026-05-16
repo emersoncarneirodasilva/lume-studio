@@ -7,40 +7,45 @@ O **Lume Studio** é um site institucional multipáginas (Multi-Page Website) de
 
 ---
 
-## 📸 Tour Completo pela Interface (UI/UX)
+## 🎨 Experiência Visual & UI/UX
 
-O design utiliza tipografia serifada imponente, espaços negativos milimetricamente planejados e componentes de alta fidelidade para transmitir exclusividade por todas as páginas do ecossistema.
+O design do Lume Studio foi concebido sob uma estética minimalista de corte editorial, utilizando tipografia serifada imponente, espaços negativos milimetricamente planejados e componentes de alta fidelidade para transmitir exclusividade.
 
-### ✦ Caraterísticas Visuais Principais
-* **Interface Totalmente Responsiva:** Layout fluido e adaptado milimetricamente para smartphones, tablets e desktops.
-* **Suporte a Temas Dinâmicos:** Modo Claro (Light Mode) e Modo Escuro (Dark Mode) nativos, mantendo o contraste e o refinamento estético em qualquer ambiente.
+* **Interface Totalmente Responsiva:** Layout fluido e adaptado de forma impecável para smartphones, tablets e desktops.
+* **Suporte a Temas Dinâmicos:** Modo Claro (Light Mode) e Modo Escuro (Dark Mode) nativos, preservando o contraste e o refinamento estético em qualquer preferência do usuário.
+
+---
+
+## 📸 Tour Completo pelas Páginas
 
 ### ✦ 1. Portal Público & Catálogo Editorial
-Uma imersão completa na filosofia do estúdio através de seções e páginas dedicadas a guiar o visitante.
-* `Home & Filosofia:` Apresentação da marca, conceito visual e depoimentos reais.
+Uma imersão completa na essência do estúdio através de seções e páginas dedicadas a guiar o visitante.
+* `Home & Conceito:` Apresentação visual da marca, seções de destaque e depoimentos selecionados.
+* `Sobre / Filosofia:` O manifesto do estúdio, detalhando a herança, o propósito e a abordagem humanizada por trás dos atendimentos.
 * `Rituais para a Estética Moderna:` Página de catálogo dinâmico alimentada via API, com filtros interativos por categoria (Estética, Unhas, Cabelos, Maquiagem).
-* `Os Artesãos:` Página dedicada a apresentar o perfil editorial dos especialistas do salão com dados e avatares dinâmicos.
+* `Os Artesãos:` Espaço editorial dedicado a apresentar o perfil, a especialidade e os especialistas do salão com dados e avatares dinâmicos.
 
-<img width="1880" height="911" alt="Captura de tela 2026-05-14 234428" src="https://github.com/user-attachments/assets/d3671f4a-56fb-4d94-b96b-e224b6edbd57" /><img width="1881" height="893" alt="Captura de tela 2026-05-15 231743" src="https://github.com/user-attachments/assets/f7ae5ea4-5238-4d70-95d8-ee597d76ac0f" />
-<img width="1867" height="900" alt="Captura de tela 2026-05-15 231809" src="https://github.com/user-attachments/assets/bbf33001-c291-44ed-822b-66f7e18b806a" />
- 
+<img width="1880" height="911" alt="Home do Lume Studio" src="https://github.com/user-attachments/assets/d3671f4a-56fb-4d94-b96b-e224b6edbd57" />
+<img width="1883" height="901" alt="Captura de tela 2026-05-15 231823" src="https://github.com/user-attachments/assets/8adb8862-00f2-4261-9232-c30cbfc21803" />
+<img width="1881" height="893" alt="Catálogo Editorial" src="https://github.com/user-attachments/assets/f7ae5ea4-5238-4d70-95d8-ee597d76ac0f" />
+<img width="1867" height="900" alt="Os Artesãos" src="https://github.com/user-attachments/assets/bbf33001-c291-44ed-822b-66f7e18b806a" />
+
 ### ✦ 2. Conecte-se Conosco (Consultas Customizadas)
 Página de contato estruturada de forma sofisticada para iniciar consultas personalizadas, alinhando expectativas de atendimento e prazos.
 
-<img width="1882" height="902" alt="Captura de tela 2026-05-15 232117" src="https://github.com/user-attachments/assets/6b8e811b-8cb1-4239-aa7b-66255c305b5b" />
+<img width="1882" height="902" alt="Página de Contato" src="https://github.com/user-attachments/assets/6b8e811b-8cb1-4239-aa7b-66255c305b5b" />
 
 ### ✦ 3. Área do Cliente & Jornada de Agendamento (Concierge)
-O coração operacional do sistema, onde o usuário gerencia sua jornada e monta seu atendimento personalizado.
+O coração operacional do sistema, onde o usuário gerencia sua jornada e monta seu atendimento sob medida.
 * `Painel "Meus Agendamentos":` Cards detalhados que exibem status do atendimento (Confirmado/Pendente), dados do profissional, duração e controle financeiro avançado (Status do pagamento, valor total e forma de retenção como Pix/Cartão).
-* `Fluxo Inteligente via WhatsApp:` Após o cliente selecionar o serviço, o profissional e o horário ideal no site, os dados são estruturados e enviados diretamente para o WhatsApp do salão, onde o administrador realiza a marcação manual definitiva no painel **Beautime Admin**.
+* `Fluxo Inteligente via WhatsApp:` Após o cliente selecionar o serviço, o profissional e o horário ideal no site, os dados são perfeitamente estruturados e enviados para o WhatsApp do salão, onde o administrador realiza a marcação definitiva no painel **Beautime Admin**.
 * `Central de Alertas & Notificações:` Listagem dinâmica com busca textual, paginação e filtros de status de agendamentos em tempo real.
 * `Perfil do Membro:` Página de gerenciamento de informações pessoais e dados de contato seguros.
 
-<img width="1877" height="897" alt="Captura de tela 2026-05-15 232219" src="https://github.com/user-attachments/assets/dfe4fc66-a786-4984-a2b6-4cc340689e2d" />
-<img width="1887" height="906" alt="Captura de tela 2026-05-15 232135" src="https://github.com/user-attachments/assets/9243954d-3ad9-4447-88be-201a8dcd366a" />
-<img width="1881" height="902" alt="Captura de tela 2026-05-15 232150" src="https://github.com/user-attachments/assets/6b0167b4-06a4-4ea6-978a-cc158623b15f" />
-<img width="1877" height="900" alt="Captura de tela 2026-05-15 232202" src="https://github.com/user-attachments/assets/9b242ae8-8a6d-4103-83b4-1736742c77de" />
-
+<img width="1877" height="897" alt="Painel de Agendamentos" src="https://github.com/user-attachments/assets/dfe4fc66-a786-4984-a2b6-4cc340689e2d" />
+<img width="1887" height="906" alt="Central de Notificações" src="https://github.com/user-attachments/assets/9243954d-3ad9-4447-88be-201a8dcd366a" />
+<img width="1881" height="902" alt="Perfil do Usuário - Informações" src="https://github.com/user-attachments/assets/6b0167b4-06a4-4ea6-978a-cc158623b15f" />
+<img width="1877" height="900" alt="Perfil do Usuário - Segurança" src="https://github.com/user-attachments/assets/9b242ae8-8a6d-4103-83b4-1736742c77de" />
 
 ---
 
