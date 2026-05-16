@@ -7,7 +7,11 @@ import {
   daysMapFull,
   formatAvailability,
 } from "@/src/utils/formatAvailability";
-import { Availability, PublicService } from "@/src/app/interfaces";
+// 🔹 Importa as novas interfaces profundas e exatas vindo do servidor
+import {
+  ProfessionalAvailability,
+  ProfessionalService,
+} from "@/src/app/interfaces";
 
 interface ProfessionalsCardProps {
   id: string;
@@ -16,8 +20,8 @@ interface ProfessionalsCardProps {
   image: string;
   bio: string;
   className?: string;
-  initialServices: PublicService[]; // 🔹 Injetado via SSR
-  initialAvailability: Availability[]; // 🔹 Injetado via SSR
+  initialServices: ProfessionalService[]; // 🔹 Atualizado para a nova tipagem
+  initialAvailability: ProfessionalAvailability[]; // 🔹 Atualizado para a nova tipagem
 }
 
 export default function ProfessionalsCard({

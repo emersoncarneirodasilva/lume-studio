@@ -2,9 +2,7 @@ import { Metadata } from "next";
 import ProfessionalsCTA from "@/src/components/Professionals/ProfessionalsCTA";
 import ProfessionalsGrid from "@/src/components/Professionals/ProfessionalsGrid";
 import ProfessionalsHero from "@/src/components/Professionals/ProfessionalsHero";
-import fetchProfessionals from "@/src/lib/api/fetchProfessionals";
-import fetchServicesByProfessional from "@/src/lib/api/fetchServicesByProfessional";
-import fetchAvailabilityByProfessional from "@/src/lib/api/fetchAvailabilityByProfessional";
+import fetchDetailedProfessionals from "@/src/lib/api/fetchDetailedProfessionals";
 
 export const metadata: Metadata = {
   title: "Nossos Profissionais | Lume Studio",
@@ -22,28 +20,18 @@ export default async function ProfessionalsPage({
   const params = await searchParams;
   const page = Number(params?.page) || 1;
 
-  const data = await fetchProfessionals(page, 4);
-
-  // A DIFERENÇA CORRIGIDA: Criamos um array de promises flat e disparamos absolutamente TUDO ao mesmo tempo
-  const professionalsWithDetails = await Promise.all(
-    data.professionals.map((pro) =>
-      Promise.all([
-        fetchServicesByProfessional(pro.id),
-        fetchAvailabilityByProfessional(pro.id),
-      ]).then(([services, availability]) => ({
-        ...pro,
-        services,
-        availability,
-      })),
-    ),
-  );
+  // UMA ÚNICA chamada de rede! Traz profissionais, serviços e disponibilidades juntos
+  const data = await fetchDetailedProfessionals(page, 4);
 
   return (
     <main>
       <ProfessionalsHero />
 
+      {/* Passamos os profissionais direto! O 'data.professionals' já está no formato exato 
+        que o seu grid espera, sem precisar de nenhum map ou Promise.all na página.
+      */}
       <ProfessionalsGrid
-        teamData={professionalsWithDetails}
+        teamData={data.professionals}
         totalPages={data.totalPages}
         currentPage={data.currentPage}
       />

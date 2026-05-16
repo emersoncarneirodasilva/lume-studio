@@ -1,4 +1,4 @@
-import { Availability } from "../app/interfaces";
+import { ProfessionalAvailability } from "../app/interfaces";
 
 export const daysMapFull: Record<number, string> = {
   0: "Domingo",
@@ -20,10 +20,8 @@ const daysMap: Record<number, string> = {
   6: "Sáb",
 };
 
-/**
- * Transforma o array de disponibilidade em um texto formatado para o card.
- */
-export function formatAvailability(data: Availability[]): string {
+/* Transforma o array de disponibilidade em um texto formatado para o card. */
+export function formatAvailability(data: ProfessionalAvailability[]): string {
   if (!data || !Array.isArray(data) || data.length === 0) {
     return "Consulte horários";
   }

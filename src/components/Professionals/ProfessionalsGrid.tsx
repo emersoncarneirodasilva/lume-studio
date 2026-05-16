@@ -3,20 +3,12 @@
 import { parseProfessionalBio } from "@/src/utils/parseProfessionalBio";
 import ProfessionalsCard from "./ProfessionalsCard";
 import Pagination from "../Pagination";
-import { Availability, PublicService } from "@/src/app/interfaces"; // 🔹 Importa as interfaces corretas
-
-export interface ProfessionalGridItem {
-  id: string;
-  name: string;
-  email: string;
-  bio: string;
-  avatarUrl: string | null;
-  services: PublicService[]; // 🔹 Adicionado para receber os dados do servidor
-  availability: Availability[]; // 🔹 Adicionado para receber os dados do servidor
-}
+// 🔹 Importamos a nova interface global que criamos para o profissional detalhado
+import { DetailedProfessional } from "@/src/app/interfaces";
 
 interface ProfessionalsGridProps {
-  teamData: ProfessionalGridItem[];
+  // 🔥 Substituímos o tipo antigo pelo nosso tipo oficial e profundo vindo do servidor
+  teamData: DetailedProfessional[];
   totalPages: number;
   currentPage: number;
 }
@@ -34,7 +26,8 @@ export default function ProfessionalsGrid({
       <div className="container-lume">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-32">
           {teamData.map((pro, index) => {
-            const { role, bio } = parseProfessionalBio(pro.bio);
+            // Se o bio vier nulo do banco, tratamos para string vazia para o parser não quebrar
+            const { role, bio } = parseProfessionalBio(pro.bio || "");
             const isStaggered = index % 2 !== 0;
 
             return (
@@ -46,8 +39,8 @@ export default function ProfessionalsGrid({
                 bio={bio}
                 image={pro.avatarUrl || "/images/placeholder-pro.jpg"}
                 className={isStaggered ? "md:mt-64" : ""}
-                initialServices={pro.services} // 🔹 Repassa os serviços injetados pelo SSR
-                initialAvailability={pro.availability} // 🔹 Repassa as disponibilidades injetadas pelo SSR
+                initialServices={pro.services} // 🔹 Injetado instantaneamente sem loaders!
+                initialAvailability={pro.availability} // 🔹 Injetado instantaneamente sem loaders!
               />
             );
           })}
