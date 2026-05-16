@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Clock, Info } from "lucide-react";
-import fetchServicesByProfessional from "@/src/lib/api/fetchServicesByProfessional";
-import fetchAvailabilityByProfessional from "@/src/lib/api/fetchAvailabilityByProfessional";
 import {
   daysMapFull,
   formatAvailability,
@@ -18,52 +16,23 @@ interface ProfessionalsCardProps {
   image: string;
   bio: string;
   className?: string;
+  initialServices: PublicService[]; // 🔹 Injetado via SSR
+  initialAvailability: Availability[]; // 🔹 Injetado via SSR
 }
 
 export default function ProfessionalsCard({
-  id,
   name,
   role,
   image,
   bio,
   className = "",
+  initialServices = [],
+  initialAvailability = [],
 }: ProfessionalsCardProps) {
-  const [services, setServices] = useState<PublicService[]>([]);
-  const [availability, setAvailability] = useState<Availability[]>([]);
-  const [formattedText, setFormattedText] = useState("");
-  const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadData() {
-      try {
-        setLoading(true);
-
-        const [sData, aData] = await Promise.all([
-          fetchServicesByProfessional(id),
-          fetchAvailabilityByProfessional(id),
-        ]);
-
-        if (isMounted) {
-          setServices(sData);
-          setAvailability(aData);
-          setFormattedText(formatAvailability(aData));
-        }
-      } catch (error) {
-        console.error("Erro:", error);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
-
-    loadData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [id]);
+  // Formata a string de disponibilidade instantaneamente sem estados de loading
+  const formattedText = formatAvailability(initialAvailability);
 
   return (
     <div className={`flex flex-col space-y-8 max-w-lg ${className}`}>
@@ -94,15 +63,14 @@ export default function ProfessionalsCard({
         </p>
 
         <div className="flex flex-wrap gap-2">
-          {!loading &&
-            services.map((svc) => (
-              <span
-                key={svc.id}
-                className="px-3 py-1 bg-card-secondary border border-card-border rounded-full text-[9px] font-bold text-muted-foreground uppercase"
-              >
-                {svc.name}
-              </span>
-            ))}
+          {initialServices.map((svc) => (
+            <span
+              key={svc.id}
+              className="px-3 py-1 bg-card-secondary border border-card-border rounded-full text-[9px] font-bold text-muted-foreground uppercase"
+            >
+              {svc.name}
+            </span>
+          ))}
         </div>
 
         <div className="pt-6 border-t border-card-border flex items-center gap-3 relative">
@@ -115,10 +83,10 @@ export default function ProfessionalsCard({
 
             <div className="flex items-center gap-2">
               <p className="text-xs font-medium text-muted-foreground">
-                {loading ? "Sincronizando..." : formattedText}
+                {formattedText}
               </p>
 
-              {!loading && availability.length > 0 && (
+              {initialAvailability.length > 0 && (
                 <div
                   className="relative cursor-help"
                   onMouseEnter={() => setShowDetails(true)}
@@ -133,7 +101,7 @@ export default function ProfessionalsCard({
                       </p>
 
                       <div className="space-y-1.5">
-                        {availability
+                        {[...initialAvailability]
                           .sort((a, b) => a.weekday - b.weekday)
                           .map((day) => (
                             <div

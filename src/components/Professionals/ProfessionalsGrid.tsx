@@ -3,6 +3,7 @@
 import { parseProfessionalBio } from "@/src/utils/parseProfessionalBio";
 import ProfessionalsCard from "./ProfessionalsCard";
 import Pagination from "../Pagination";
+import { Availability, PublicService } from "@/src/app/interfaces"; // 🔹 Importa as interfaces corretas
 
 export interface ProfessionalGridItem {
   id: string;
@@ -10,6 +11,8 @@ export interface ProfessionalGridItem {
   email: string;
   bio: string;
   avatarUrl: string | null;
+  services: PublicService[]; // 🔹 Adicionado para receber os dados do servidor
+  availability: Availability[]; // 🔹 Adicionado para receber os dados do servidor
 }
 
 interface ProfessionalsGridProps {
@@ -43,6 +46,8 @@ export default function ProfessionalsGrid({
                 bio={bio}
                 image={pro.avatarUrl || "/images/placeholder-pro.jpg"}
                 className={isStaggered ? "md:mt-64" : ""}
+                initialServices={pro.services} // 🔹 Repassa os serviços injetados pelo SSR
+                initialAvailability={pro.availability} // 🔹 Repassa as disponibilidades injetadas pelo SSR
               />
             );
           })}
