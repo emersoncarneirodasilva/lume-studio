@@ -24,6 +24,9 @@ export function generateConciergeWhatsAppLink(
     return null;
   }
 
+  // Garante que se houver traço, espaço ou parênteses na Vercel, o link não quebre
+  const cleanPhone = phone.replace(/\D/g, "");
+
   const duration = formatDuration(service?.duration ?? 0);
   const formattedPrice = service?.price
     ? service.price.toLocaleString("pt-BR", {
@@ -48,5 +51,5 @@ export function generateConciergeWhatsAppLink(
     `*Horário:* ${hour}\n\n` +
     `Fico no aguardo das instruções para a finalização do meu atendimento. Obrigado!`;
 
-  return `https://wa.me/55${phone}?text=${encodeURIComponent(msg)}`;
+  return `https://wa.me/55${cleanPhone}?text=${encodeURIComponent(msg)}`;
 }

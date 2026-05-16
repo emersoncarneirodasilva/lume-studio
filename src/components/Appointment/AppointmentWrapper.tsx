@@ -60,7 +60,7 @@ export default function AppointmentWrapper({
   const handleFinish = (dateFormatted: string, hour: string) => {
     const { service, professional } = selection;
 
-    // Gera o link usando a utilidade componentizada externa
+    // Gera o link usando a utilidade externa
     const whatsappUrl = generateConciergeWhatsAppLink({
       service,
       professional,
@@ -69,8 +69,13 @@ export default function AppointmentWrapper({
       hour,
     });
 
+    // Se a variável de ambiente sumiu, cai aqui
     if (!whatsappUrl) {
-      toast.error("Ocorreu um erro ao gerar o link de agendamento.");
+      toast.error("Erro de configuração", {
+        description:
+          "O canal de agendamentos via WhatsApp está indisponível no momento. Por favor, tente mais tarde.",
+        duration: 5000,
+      });
       return;
     }
 
@@ -80,10 +85,16 @@ export default function AppointmentWrapper({
     });
 
     setTimeout(() => {
-      // 1. Abre o WhatsApp de forma segura e evita bloqueios de pop-up no mobile
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      // SOLUÇÃO ANTIMOBILE: Cria um elemento 'a' oculto, injeta o link e simula o clique físico do usuário
+      const a = document.createElement("a");
+      a.href = whatsappUrl;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
 
-      // 2. Redireciona o usuário de volta para a Home do site de forma suave
+      // Redireciona de volta para a Home de forma suave
       router.push("/");
     }, 1200);
   };
