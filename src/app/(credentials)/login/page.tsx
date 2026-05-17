@@ -13,7 +13,7 @@ export default function LoginPage() {
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 place-items-center bg-background relative overflow-hidden">
       <Suspense fallback={<div className="text-white">Carregando...</div>}>
         {/* Aqui está ele! Por padrão redireciona para a Home ("/") */}
-        <SuccessToastAutoRedirect href="/" />
+        <SuccessToastAutoRedirect redirectToOnSuccess="/" />
 
         {/* Lado Esquerdo - Formulário de Login */}
         <LoginForm />

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import EditProfileFeedback from "@/src/components/Edit/EditProfileFeedback";
 import ForgotPasswordForm from "@/src/components/ForgotPassword/ForgotPasswordForm";
 import ForgotPasswordImage from "@/src/components/ForgotPassword/ForgotPasswordImage";
+import SuccessToastAutoRedirect from "@/src/components/Success/SuccessToastAutoRedirect";
 
 export const metadata = {
   title: "Lume Studio - Recuperar Senha",
@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 items-stretch bg-background relative overflow-hidden">
       {/* Componente que escuta os erros (?error=...) na URL e exibe o Sonner */}
       <Suspense fallback={null} key={uniqueKey}>
-        <EditProfileFeedback />
+        <SuccessToastAutoRedirect redirectToOnSuccess="/login" />
       </Suspense>
 
       {/* Lado Esquerdo - Formulário de Recuperação */}
