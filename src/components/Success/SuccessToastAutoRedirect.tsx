@@ -21,15 +21,25 @@ export default function SuccessToastAutoRedirect({ href = "/" }: Props) {
     ) {
       toastDisparadoRef.current = `success:${successMessage}`;
 
-      toast.success(decodeURIComponent(successMessage), { duration: 4000 });
+      const decodedMsg = decodeURIComponent(successMessage);
+      toast.success(decodedMsg, { duration: 4000 });
 
-      // Se o href for "/login", significa que já estamos no login. Não redireciona!
-      if (href === "/login") {
-        window.history.replaceState(null, "", window.location.pathname); // Limpa o ?success da barra
+      // 🚨 BLINDAGEM MÁXIMA: Se a mensagem for de link enviado, cadastro ou redefinição,
+      // NUNCA deixa ir para a Home. Trava o usuário no login e limpa a URL.
+      const msgLower = decodedMsg.toLowerCase();
+      const isOtherFlow =
+        msgLower.includes("link") ||
+        msgLower.includes("enviado") ||
+        msgLower.includes("cadast") ||
+        msgLower.includes("recupera") ||
+        msgLower.includes("redefin");
+
+      if (isOtherFlow || href === "/login") {
+        window.history.replaceState(null, "", window.location.pathname);
         return;
       }
 
-      // Se for o login real (href="/"), manda para a Home
+      // Se for o sucesso do Login real, aí sim vai para a Home após o tempo do toast
       const timer = setTimeout(() => {
         window.location.assign(href);
       }, 500);
