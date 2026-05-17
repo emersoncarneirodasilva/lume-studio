@@ -1,69 +1,48 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
-interface SuccessToastAutoRedirectProps {
-  redirectToOnSuccess: string; // Para onde ir quando der certo
+interface Props {
+  href?: string;
 }
 
-export default function SuccessToastAutoRedirect({
-  redirectToOnSuccess,
-}: SuccessToastAutoRedirectProps) {
+export default function SuccessToastAutoRedirect({ href = "/" }: Props) {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
-
   const successMessage = searchParams.get("success");
   const errorMessage = searchParams.get("error");
-
   const toastDisparadoRef = useRef<string | null>(null);
 
   useEffect(() => {
-    // 1. CASO DE SUCESSO: Mostra o Toast e joga para a tela correta (ex: /login)
     if (
       successMessage &&
       toastDisparadoRef.current !== `success:${successMessage}`
     ) {
       toastDisparadoRef.current = `success:${successMessage}`;
 
-      toast.success(decodeURIComponent(successMessage), {
-        duration: 2500,
-      });
+      toast.success(decodeURIComponent(successMessage), { duration: 4000 });
 
+      // Se o href for "/login", significa que já estamos no login. Não redireciona!
+      if (href === "/login") {
+        window.history.replaceState(null, "", window.location.pathname); // Limpa o ?success da barra
+        return;
+      }
+
+      // Se for o login real (href="/"), manda para a Home
       const timer = setTimeout(() => {
-        // Redireciona limpando a URL e forçando a entrada na nova página
-        window.location.assign(redirectToOnSuccess);
-      }, 300);
+        window.location.assign(href);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
 
-    // 2. CASO DE ERRO: Mostra o erro e apenas limpa os parâmetros da URL sem sair da página
     if (errorMessage && toastDisparadoRef.current !== `error:${errorMessage}`) {
       toastDisparadoRef.current = `error:${errorMessage}`;
-
-      toast.error(decodeURIComponent(errorMessage), {
-        duration: 5000,
-      });
-
-      // Limpa a URL de forma suave para o usuário poder tentar de novo limpo
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete("error");
-      const query = params.toString();
-      const cleanUrl = query ? `${pathname}?${query}` : pathname;
-
-      router.replace(cleanUrl, { scroll: false });
+      toast.error(decodeURIComponent(errorMessage), { duration: 4000 });
+      window.history.replaceState(null, "", window.location.pathname);
     }
-  }, [
-    successMessage,
-    errorMessage,
-    redirectToOnSuccess,
-    pathname,
-    router,
-    searchParams,
-  ]);
+  }, [successMessage, errorMessage, href]);
 
   return null;
 }

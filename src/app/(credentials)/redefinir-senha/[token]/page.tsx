@@ -27,7 +27,7 @@ export default async function ResetPasswordPage({
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-2 items-stretch bg-background relative overflow-hidden">
       {/* Componente que escuta os erros (?error=...) na URL e exibe o Sonner */}
       <Suspense fallback={null} key={uniqueKey}>
-        <SuccessToastAutoRedirect redirectToOnSuccess="/login" />
+        <SuccessToastAutoRedirect href="/login" />
       </Suspense>
 
       {/* Lado Esquerdo - Formulário de Redefinição */}
