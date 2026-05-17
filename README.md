@@ -38,13 +38,15 @@
 - Depoimentos de clientes estrategicamente posicionados
 - Call-to-action inteligente para conversão
 
-<img width="1883" height="901" alt="Brand Experience" src="https://github.com/user-attachments/assets/8adb8862-00f2-4261-9232-c30cbfc21803" />
+<img width="1873" height="895" alt="Captura de tela 2026-05-15 231647" src="https://github.com/user-attachments/assets/2b91bb5a-1576-4968-90e1-e0eea6689509" />
 
 **Sobre Lume Studio**
 
 - Manifesto e filosofia do estúdio
 - Herança, propósito e abordagem humanizada
 - Storytelling editorial de alta fidelidade
+
+<img width="1883" height="901" alt="Brand Experience" src="https://github.com/user-attachments/assets/8adb8862-00f2-4261-9232-c30cbfc21803" />
 
 **Rituais para a Estética Moderna**
 
@@ -72,15 +74,6 @@
 
 ### 2️⃣ Área do Cliente (Authenticated)
 
-**Dashboard de Agendamentos**
-
-- Visualização centralizada de todos os agendamentos
-- Cards detalhados com status (Confirmado/Pendente)
-- Informações do profissional, duração e dados financeiros
-- Controle de pagamento: Pix, Cartão com rastreamento de status
-
-<img width="1877" height="897" alt="Painel de Agendamentos" src="https://github.com/user-attachments/assets/dfe4fc66-a786-4984-a2b6-4cc340689e2d" />
-
 **Fluxo de Agendamento Inteligente**
 
 1. Cliente seleciona Serviço
@@ -89,14 +82,7 @@
 4. Dados são estruturados e enviados para WhatsApp do salão
 5. Admin Beautime confirma e finaliza a marcação
 
-**Central de Notificações**
-
-- Listagem dinâmica de alertas em tempo real
-- Busca textual e filtros por status
-- Paginação inteligente
-- Rastreamento de confirmações
-
-<img width="1887" height="906" alt="Central de Notificações" src="https://github.com/user-attachments/assets/9243954d-3ad9-4447-88be-201a8dcd366a" />
+<img width="1877" height="897" alt="Painel de Agendamentos" src="https://github.com/user-attachments/assets/dfe4fc66-a786-4984-a2b6-4cc340689e2d" />
 
 **Gerenciamento de Perfil**
 
@@ -105,7 +91,24 @@
 - Central de segurança com alteração de senha
 - Histórico completo de agendamentos anteriores
 
+<img width="1887" height="906" alt="Central de Notificações" src="https://github.com/user-attachments/assets/9243954d-3ad9-4447-88be-201a8dcd366a" />
+
+**Central de Notificações**
+
+- Listagem dinâmica de alertas em tempo real
+- Busca textual e filtros por status
+- Paginação inteligente
+- Rastreamento de confirmações
+
 <img width="1881" height="902" alt="Perfil do Usuário - Informações" src="https://github.com/user-attachments/assets/6b0167b4-06a4-4ea6-978a-cc158623b15f" />
+
+**Dashboard de Agendamentos**
+
+- Visualização centralizada de todos os agendamentos
+- Cards detalhados com status (Confirmado/Pendente)
+- Informações do profissional, duração e dados financeiros
+- Controle de pagamento: Pix, Cartão com rastreamento de status
+
 <img width="1877" height="900" alt="Perfil do Usuário - Segurança" src="https://github.com/user-attachments/assets/9b242ae8-8a6d-4103-83b4-1736742c77de" />
 
 ---
@@ -175,36 +178,6 @@
 
 ---
 
-## 📦 Como Executar
-
-### Pré-requisitos
-
-- Node.js 18+ (16.2.4+ recomendado para Next.js)
-- npm ou yarn
-
-### Instalação
-
-```bash
-# Instalar dependências
-npm install
-
-# Executar em desenvolvimento
-npm run dev
-
-# Build para produção
-npm run build
-
-# Iniciar servidor de produção
-npm start
-
-# Executar linter
-npm run lint
-```
-
-O aplicativo estará disponível em `http://localhost:3000`
-
----
-
 ## 📄 Estrutura de Projeto
 
 ```
@@ -242,8 +215,7 @@ src/
 
 ## 🚀 Roadmap & Melhorias Futuras
 
-- [ ] Sistema de avaliações e comentários de clientes
-- [ ] Dashboard administrativo avançado
+- [ ] Sistema de avaliações e comentários de clientes 
 - [ ] Integração com payment gateways
 - [ ] Progressive Web App (PWA) support
 - [ ] Analytics e insights de agendamentos
@@ -259,6 +231,4 @@ Este projeto é de uso privado e exclusivo para o ecossistema **Lume Studio** e 
 
 ## 🤝 Contribuidores
 
-Desenvolvido com ❤️, 🧠 e ☕ por **Emerson Silva**
-
-Powered by modern web technologies • Est. 2026
+Desenvolvido com ❤️, 🧠 e ☕ por **Emerson Carneiro da Silva**
