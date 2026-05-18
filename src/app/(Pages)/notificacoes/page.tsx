@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import { BellOff } from "lucide-react";
 import fetchMyNotifications from "@/src/lib/api/fetchMyNotifications";
 import NotificationCard from "@/src/components/Notifications/NotificationCard";
-import Pagination from "@/src/components/Pagination";
 import NotificationsHero from "@/src/components/Notifications/NotificationsHero";
 import NotificationFilters from "@/src/components/Notifications/NotificationFilters";
+import NotificationPagination from "@/src/components/Pagination/NotificationPagination";
 
 export const metadata: Metadata = {
   title: "Minhas Novidades | Lume Studio",
@@ -77,11 +77,10 @@ export default async function NotificationsPage({
               </div>
             )}
 
-            {/* Componente de Paginação */}
-            <Pagination
+            {/* Componente de Paginação Exclusivo de Notificações */}
+            <NotificationPagination
               totalPages={totalPages}
               currentPage={page}
-              basePath="/notificacoes"
             />
           </section>
         </div>
