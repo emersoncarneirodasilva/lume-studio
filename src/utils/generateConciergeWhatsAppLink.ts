@@ -24,8 +24,15 @@ export function generateConciergeWhatsAppLink(
     return null;
   }
 
-  // Garante que se houver traço, espaço ou parênteses na Vercel, o link não quebre
   const cleanPhone = phone.replace(/\D/g, "");
+  const normalizedPhone = cleanPhone.startsWith("55")
+    ? cleanPhone
+    : `55${cleanPhone}`;
+
+  if (normalizedPhone.length < 11) {
+    console.error("Erro: número de telefone WhatsApp inválido.");
+    return null;
+  }
 
   const duration = formatDuration(service?.duration ?? 0);
   const formattedPrice = service?.price

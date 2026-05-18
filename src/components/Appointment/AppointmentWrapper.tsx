@@ -73,7 +73,14 @@ export default function AppointmentWrapper({
       return;
     }
 
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    const anchor = document.createElement("a");
+    anchor.href = whatsappUrl;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    anchor.style.display = "none";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
 
     toast.success("Horário reservado com sucesso!", {
       description: `Conectando você ao Concierge Lume para finalizar seu agendamento...`,
