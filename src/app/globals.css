@@ -133,3 +133,39 @@ body {
     background-color 0.3s ease,
     color 0.3s ease;
 }
+
+/* ==========================================================================
+   SCROLLBAR CUSTOMIZADA (Estética Premium Lume Studio)
+   ========================================================================== */
+
+/* 1. Largura da barra (Fina e elegante) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* 2. O trilho (Fundo da barra) - Usa o fundo secundário para um contraste suave */
+::-webkit-scrollbar-track {
+  background: var(--card-secondary);
+}
+
+/* 3. O pegador (Thumb) - Tom de ouro no Light Mode / Ajuste sutil no Dark Mode */
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-gold-dark);
+  border-radius: 9999px;
+  border: 2px solid var(--card-secondary); /* Cria um espaçamento elegante nas bordas */
+  transition: background-color 0.3s ease;
+}
+
+/* 4. Efeito de Hover no pegador - clareia levemente ao passar o mouse */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-gold-light);
+}
+
+/* Suporte para Firefox (Propriedades padrão) */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-brand-gold-dark) var(--card-secondary);
+  }
+}
