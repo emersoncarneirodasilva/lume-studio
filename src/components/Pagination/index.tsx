@@ -6,18 +6,25 @@ interface PaginationProps {
   totalPages: number;
   currentPage: number;
   basePath?: string;
+  onPageChange?: (page: number) => void;
 }
 
 export default function Pagination({
   totalPages,
   currentPage,
   basePath,
+  onPageChange,
 }: PaginationProps) {
   const router = useRouter();
 
   const handlePageChange = (page: number) => {
-    router.push(`${basePath || ""}?page=${page}`, { scroll: false });
+    if (onPageChange) {
+      onPageChange(page);
+      window.scrollTo({ top: 350, behavior: "smooth" });
+      return;
+    }
 
+    router.push(`${basePath || ""}?page=${page}`, { scroll: false });
     window.scrollTo({ top: 350, behavior: "smooth" });
   };
 

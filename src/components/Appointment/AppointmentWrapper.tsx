@@ -7,30 +7,19 @@ import StepService from "./StepService";
 import StepProfessional from "./StepProfessional";
 import StepDateTime from "./StepDateTime";
 import { generateConciergeWhatsAppLink } from "@/src/utils/generateConciergeWhatsAppLink";
-import { UserProfile } from "@/src/app/interfaces";
-
-export interface Service {
-  id: string;
-  name: string;
-  description?: string | null;
-  price: number;
-  duration?: number;
-}
-
-export interface Professional {
-  id: string;
-  name: string;
-  bio: string;
-  avatarUrl?: string | null;
-}
+import {
+  UserProfile,
+  Service as ServiceType,
+  ProfessionalData as Professional,
+} from "@/src/app/interfaces";
 
 interface SelectionState {
-  service: Service | null;
+  service: ServiceType | null;
   professional: Professional | null;
 }
 
 interface AppointmentWrapperProps {
-  initialServices: any[];
+  initialServices: ServiceType[];
   token: string;
   user?: UserProfile | null;
 }
@@ -47,7 +36,7 @@ export default function AppointmentWrapper({
     professional: null,
   });
 
-  const handleServiceSelect = (service: any) => {
+  const handleServiceSelect = (service: ServiceType) => {
     setSelection((prev) => ({ ...prev, service }));
     setStep(2);
   };
@@ -60,7 +49,13 @@ export default function AppointmentWrapper({
   const handleFinish = (dateFormatted: string, hour: string) => {
     const { service, professional } = selection;
 
-    // Gera o link usando a utilidade externa
+    if (!service || !professional) {
+      toast.error("Selecione serviço e especialista antes de finalizar.", {
+        duration: 4000,
+      });
+      return;
+    }
+
     const whatsappUrl = generateConciergeWhatsAppLink({
       service,
       professional,
@@ -69,7 +64,6 @@ export default function AppointmentWrapper({
       hour,
     });
 
-    // Se a variável de ambiente sumiu, cai aqui
     if (!whatsappUrl) {
       toast.error("Erro de configuração", {
         description:
@@ -79,24 +73,16 @@ export default function AppointmentWrapper({
       return;
     }
 
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
     toast.success("Horário reservado com sucesso!", {
       description: `Conectando você ao Concierge Lume para finalizar seu agendamento...`,
       duration: 3500,
     });
 
     setTimeout(() => {
-      // SOLUÇÃO ANTIMOBILE: Cria um elemento 'a' oculto, injeta o link e simula o clique físico do usuário
-      const a = document.createElement("a");
-      a.href = whatsappUrl;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      // Redireciona de volta para a Home de forma suave
       router.push("/");
-    }, 1200);
+    }, 900);
   };
 
   return (

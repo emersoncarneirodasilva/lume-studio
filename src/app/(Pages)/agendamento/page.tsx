@@ -13,14 +13,18 @@ export const metadata: Metadata = {
 };
 
 export default async function AppointmentPage() {
-  const response = await fetchAllServices();
-  const servicesData = response?.services || [];
-
   // Pegando o token de forma 100% segura no Server-side
   const cookieStore = await cookies();
   const token = cookieStore.get("user_token")?.value || "";
 
-  const user: UserProfile = await fetchMyProfile(token);
+  // Disparando as requisições em paralelo para eliminar o Waterfall Effect
+  const [servicesResponse, userData] = await Promise.all([
+    fetchAllServices(),
+    fetchMyProfile(token),
+  ]);
+
+  const servicesData = servicesResponse?.services || [];
+  const user: UserProfile = userData;
 
   return (
     <main className="pt-40 pb-20 px-6 md:px-12 bg-background transition-colors duration-300">

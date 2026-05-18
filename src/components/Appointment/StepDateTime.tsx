@@ -42,7 +42,13 @@ export default function StepDateTime({
 
   useEffect(() => {
     async function getAvailability() {
-      if (!professionalId) return;
+      if (!professionalId) {
+        setBlocks([]);
+        setError("Especialista não selecionado.");
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);
@@ -50,8 +56,9 @@ export default function StepDateTime({
         const slug = process.env.NEXT_PUBLIC_SLUG;
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-        if (!apiUrl || !slug)
+        if (!apiUrl || !slug) {
           throw new Error("Configurações de API não encontradas.");
+        }
 
         const res = await fetch(
           `${apiUrl}/availability/public/${slug}/${professionalId}`,
@@ -83,7 +90,7 @@ export default function StepDateTime({
     }
 
     getAvailability();
-  }, [professionalId, token, weekOffset, currentMonth]);
+  }, [professionalId, token]);
 
   // 🧠 Gera a lista dinâmica dos próximos 12 meses (ex: "Maio 2026", "Janeiro 2027"...)
   const availableMonths = generateAvailableMonths(now);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { HelpCircle } from "lucide-react";
 import { formatDuration } from "@/src/utils/formatDuration";
@@ -18,26 +18,42 @@ export default function StepService({ services, onSelect }: StepServiceProps) {
   const servicesPerPage = 5;
 
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const categories = [
-    "Todos",
-    ...Array.from(
-      new Set(services.map((s) => s.category?.name).filter(Boolean)),
-    ),
-  ];
-
-  const filteredServices = services.filter((service) =>
-    selectedCategory === "Todos"
-      ? true
-      : service.category?.name === selectedCategory,
+  const categories = useMemo(
+    () => [
+      "Todos",
+      ...Array.from(
+        new Set(services.map((s) => s.category?.name).filter(Boolean)),
+      ),
+    ],
+    [services],
   );
 
-  const totalPages = Math.ceil(filteredServices.length / servicesPerPage);
+  const filteredServices = useMemo(
+    () =>
+      services.filter((service) =>
+        selectedCategory === "Todos"
+          ? true
+          : service.category?.name === selectedCategory,
+      ),
+    [services, selectedCategory],
+  );
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredServices.length / servicesPerPage),
+  );
   const indexOfLastService = currentPage * servicesPerPage;
   const indexOfFirstService = indexOfLastService - servicesPerPage;
-  const currentServices = filteredServices.slice(
-    indexOfFirstService,
-    indexOfLastService,
+  const currentServices = useMemo(
+    () => filteredServices.slice(indexOfFirstService, indexOfLastService),
+    [filteredServices, indexOfFirstService, indexOfLastService],
   );
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500 w-full">
@@ -90,143 +106,139 @@ export default function StepService({ services, onSelect }: StepServiceProps) {
       </div>
 
       {/* Listagem Executiva */}
-      <div className="divide-y divide-card-border/30">
-        {currentServices.map((service) => {
-          // Extraindo os dados processados pelo JS para cada item do map
-          const { type, description } = formatDetails(service.description);
+      {filteredServices.length === 0 ? (
+        <div className="text-center py-20 border border-card-border rounded-xl">
+          <p className="text-sm text-muted-foreground font-light">
+            Nenhum serviço encontrado para essa categoria.
+          </p>
+        </div>
+      ) : (
+        <div className="divide-y divide-card-border/30">
+          {currentServices.map((service) => {
+            // Extraindo os dados processados pelo JS para cada item do map
+            const { type, description } = formatDetails(service.description);
 
-          return (
-            <div
-              key={service.id}
-              className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 px-4 hover:bg-card-secondary/20 transition-all duration-300 rounded-xl gap-4"
-            >
-              {/* Bloco de Imagem e Textos */}
+            return (
               <div
-                onClick={() => onSelect(service)}
-                className="flex items-center gap-6 flex-1 min-w-0 cursor-pointer"
+                key={service.id}
+                className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 px-4 hover:bg-card-secondary/20 transition-all duration-300 rounded-xl gap-4"
               >
-                {/* Imagem Premium */}
-                <div className="relative w-20 h-20 shrink-0 overflow-hidden rounded-xl bg-card-primary border border-card-border/40 transition-all duration-500 group-hover:border-brand-gold-dark/40 shadow-sm">
-                  {service.imageUrl ? (
-                    <Image
-                      src={service.imageUrl}
-                      alt={service.name}
-                      fill
-                      className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out"
-                      sizes="80px"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[10px] font-serif text-brand-gold-dark/30 uppercase tracking-widest">
-                      Lume
-                    </div>
-                  )}
-                </div>
-
-                {/* Informações Textuais */}
-                <div className="space-y-1 min-w-0 flex-1">
-                  {/* Categoria + Tipo ao lado (se existir) */}
-                  <div className="flex flex-wrap items-center gap-x-2 text-[10px] font-bold uppercase tracking-widest">
-                    <span className="text-brand-gold-dark/70">
-                      {service.category?.name || "Geral"}
-                    </span>
-                    {type && (
-                      <>
-                        <span className="text-muted-foreground/30 font-light">
-                          |
-                        </span>
-                        <span className="text-muted-foreground/50 font-normal italic lowercase first-letter:uppercase">
-                          {type}
-                        </span>
-                      </>
-                    )}
-                  </div>
-
-                  {/* Título do Serviço + Ícone com Tooltip Limpo */}
-                  <div className="flex items-center gap-2 max-w-full">
-                    <h3 className="text-lg md:text-xl font-medium text-foreground group-hover:text-brand-gold-dark transition-colors duration-300 truncate">
-                      {service.name}
-                    </h3>
-
-                    {/* Tooltip exibindo EXCLUSIVAMENTE a descrição limpa */}
-                    {description && (
-                      <div className="relative inline-block group/tooltip shrink-0">
-                        <HelpCircle
-                          size={14}
-                          className="text-muted-foreground/40 hover:text-brand-gold-dark transition-colors cursor-help mt-0.5"
-                        />
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-card-primary border border-brand-gold-dark/20 text-muted-foreground text-xs font-light rounded-lg opacity-0 pointer-events-none group-hover/tooltip:opacity-100 transition-opacity duration-300 shadow-xl z-30 leading-relaxed italic text-center">
-                          <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-card-primary border-r border-b border-brand-gold-dark/20 rotate-45" />
-                          {description}
-                        </div>
+                {/* Bloco de Imagem e Textos */}
+                <div
+                  onClick={() => onSelect(service)}
+                  className="flex items-center gap-6 flex-1 min-w-0 cursor-pointer"
+                >
+                  {/* Imagem Premium */}
+                  <div className="relative w-20 h-20 shrink-0 overflow-hidden rounded-xl bg-card-primary border border-card-border/40 transition-all duration-500 group-hover:border-brand-gold-dark/40 shadow-sm">
+                    {service.imageUrl ? (
+                      <Image
+                        src={service.imageUrl}
+                        alt={service.name}
+                        fill
+                        className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out"
+                        sizes="80px"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[10px] font-serif text-brand-gold-dark/30 uppercase tracking-widest">
+                        Lume
                       </div>
                     )}
                   </div>
 
-                  {/* Descrição limpa na tela com limite de 1 linha (...) */}
-                  {description && (
-                    <p className="text-xs text-muted-foreground/60 font-light line-clamp-1 italic max-w-3xl">
-                      {description}
-                    </p>
-                  )}
+                  {/* Informações Textuais */}
+                  <div className="space-y-1 min-w-0 flex-1">
+                    {/* Categoria + Tipo ao lado (se existir) */}
+                    <div className="flex flex-wrap items-center gap-x-2 text-[10px] font-bold uppercase tracking-widest">
+                      <span className="text-brand-gold-dark/70">
+                        {service.category?.name || "Geral"}
+                      </span>
+                      {type && (
+                        <>
+                          <span className="text-muted-foreground/30 font-light">
+                            |
+                          </span>
+                          <span className="text-muted-foreground/50 font-normal italic lowercase first-letter:uppercase">
+                            {type}
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Título do Serviço + Ícone com Tooltip Limpo */}
+                    <div className="flex items-center gap-2 max-w-full">
+                      <h3 className="text-lg md:text-xl font-medium text-foreground group-hover:text-brand-gold-dark transition-colors duration-300 truncate">
+                        {service.name}
+                      </h3>
+
+                      {/* Tooltip exibindo EXCLUSIVAMENTE a descrição limpa */}
+                      {description && (
+                        <div className="relative inline-block group/tooltip shrink-0">
+                          <HelpCircle
+                            size={14}
+                            className="text-muted-foreground/40 hover:text-brand-gold-dark transition-colors cursor-help mt-0.5"
+                          />
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-card-primary border border-brand-gold-dark/20 text-muted-foreground text-xs font-light rounded-lg opacity-0 pointer-events-none group-hover/tooltip:opacity-100 transition-opacity duration-300 shadow-xl z-30 leading-relaxed italic text-center">
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-card-primary border-r border-b border-brand-gold-dark/20 rotate-45" />
+                            {description}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Descrição limpa na tela com limite de 1 linha (...) */}
+                    {description && (
+                      <p className="text-xs text-muted-foreground/60 font-light line-clamp-1 italic max-w-3xl">
+                        {description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Duração, Preço e Ação */}
+                <div className="flex items-center justify-between sm:justify-end gap-12 shrink-0">
+                  <div className="text-right hidden md:block">
+                    <span className="text-[9px] uppercase tracking-wider text-muted-foreground/50 block">
+                      Duração
+                    </span>
+                    <span className="text-sm font-medium text-foreground">
+                      {formatDuration(service.duration)}
+                    </span>
+                  </div>
+
+                  <div className="text-left sm:text-right">
+                    <span className="text-[9px] uppercase tracking-wider text-muted-foreground/50 block md:hidden">
+                      Duração: {formatDuration(service.duration)}
+                    </span>
+                    <span className="text-lg md:text-xl font-serif text-brand-gold-dark tracking-tight">
+                      {service.price.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </span>
+                  </div>
+
+                  <div
+                    onClick={() => onSelect(service)}
+                    className="w-9 h-9 rounded-full border border-card-border/60 flex items-center justify-center group-hover:border-brand-gold-dark group-hover:bg-brand-gold-dark group-hover:text-black text-muted-foreground transition-all duration-300 cursor-pointer shadow-sm"
+                  >
+                    <span className="text-base transform group-hover:translate-x-0.5 transition-transform">
+                      →
+                    </span>
+                  </div>
                 </div>
               </div>
-
-              {/* Duração, Preço e Ação */}
-              <div className="flex items-center justify-between sm:justify-end gap-12 shrink-0">
-                <div className="text-right hidden md:block">
-                  <span className="text-[9px] uppercase tracking-wider text-muted-foreground/50 block">
-                    Duração
-                  </span>
-                  <span className="text-sm font-medium text-foreground">
-                    {formatDuration(service.duration)}
-                  </span>
-                </div>
-
-                <div className="text-left sm:text-right">
-                  <span className="text-[9px] uppercase tracking-wider text-muted-foreground/50 block md:hidden">
-                    Duração: {formatDuration(service.duration)}
-                  </span>
-                  <span className="text-lg md:text-xl font-serif text-brand-gold-dark tracking-tight">
-                    {service.price.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </span>
-                </div>
-
-                <div
-                  onClick={() => onSelect(service)}
-                  className="w-9 h-9 rounded-full border border-card-border/60 flex items-center justify-center group-hover:border-brand-gold-dark group-hover:bg-brand-gold-dark group-hover:text-black text-muted-foreground transition-all duration-300 cursor-pointer shadow-sm"
-                >
-                  <span className="text-base transform group-hover:translate-x-0.5 transition-transform">
-                    →
-                  </span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Paginação */}
-      <div
-        onClickCapture={(e) => {
-          const target = e.target as HTMLElement;
-          const button = target.closest("button");
-          if (button) {
-            const pageNumber = parseInt(button.innerText, 10);
-            if (!isNaN(pageNumber)) {
-              setCurrentPage(pageNumber);
-            }
-          }
-        }}
-      >
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          basePath=""
-        />
-      </div>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        basePath=""
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

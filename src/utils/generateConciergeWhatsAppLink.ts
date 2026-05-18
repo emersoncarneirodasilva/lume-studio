@@ -1,9 +1,9 @@
+import { formatDuration } from "@/src/utils/formatDuration";
 import {
   Service,
-  Professional,
-} from "@/src/components/Appointment/AppointmentWrapper";
-import { formatDuration } from "@/src/utils/formatDuration";
-import { UserProfile } from "../app/interfaces";
+  ProfessionalData as Professional,
+  UserProfile,
+} from "@/src/app/interfaces";
 
 interface GenerateMessageProps {
   service: Service | null;

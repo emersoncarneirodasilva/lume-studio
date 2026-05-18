@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import fetchProfessionalsOnService from "@/src/lib/api/fetchProfessionalsOnService";
-import { Professional } from "./AppointmentWrapper";
 import { parseBio } from "@/src/utils/parseBio";
 import AnimateSpin from "../Spin/AnimateSpin";
-import { ProfessionalOnService } from "@/src/app/interfaces";
+import {
+  ProfessionalData as Professional,
+  ProfessionalOnService,
+} from "@/src/app/interfaces";
+
 interface StepProfessionalProps {
   serviceId: string;
   token: string;
@@ -28,7 +31,13 @@ export default function StepProfessional({
 
   useEffect(() => {
     async function getProfessionals() {
-      if (!serviceId) return;
+      if (!serviceId) {
+        setProfessionals([]);
+        setError("Serviço inválido.");
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);
@@ -88,6 +97,12 @@ export default function StepProfessional({
       {error ? (
         <div className="text-center py-20 border border-card-border rounded-xl">
           <p className="text-sm text-muted-foreground font-light">{error}</p>
+        </div>
+      ) : professionals.length === 0 ? (
+        <div className="text-center py-20 border border-card-border rounded-xl">
+          <p className="text-sm text-muted-foreground font-light">
+            Nenhum especialista disponível para esse serviço no momento.
+          </p>
         </div>
       ) : (
         /* Grid de Cards - Estilo Editorial Profissional */
