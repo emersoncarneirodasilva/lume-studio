@@ -97,7 +97,7 @@ export default function NotificationCard({
               </div>
 
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {appointment.services?.map((s: any, idx: number) => (
+                {appointment.services?.map((s, idx: number) => (
                   <span
                     key={idx}
                     className="text-sm text-foreground/80 font-light"

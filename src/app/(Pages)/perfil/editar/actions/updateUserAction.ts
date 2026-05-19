@@ -53,14 +53,14 @@ export async function updateUserAction(formData: FormData) {
 
     // Sucesso!
     redirectTo = `/perfil?success=${encodeURIComponent("Perfil atualizado com sucesso!")}`;
-  } catch (err: any) {
+  } catch (err: unknown) {
     // Tratamento robusto para pegar a mensagem exata do backend
     let message = "Erro ao atualizar perfil.";
 
     if (err instanceof Error) {
       message = err.message;
     } else if (err && typeof err === "object" && "message" in err) {
-      message = String(err.message);
+      message = String((err as { message: unknown }).message);
     } else if (typeof err === "string") {
       message = err;
     }

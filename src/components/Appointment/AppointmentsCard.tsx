@@ -3,7 +3,7 @@ import { formatDate, formatDuration, formatTime } from "@/src/utils/dateTime";
 import StatusBadge from "./StatusBadge";
 import PaymentStatusText from "./PaymentStatusText";
 import PaymentMethodText from "./PaymentMethodText";
-import { Appointment } from "@/src/app/interfaces";
+import { Appointment, AppointmentService } from "@/src/app/interfaces";
 
 interface AppointmentsCardProps {
   appointment: Appointment;
@@ -16,7 +16,7 @@ export default function AppointmentsCard({
   const finalPrice = appointment.payment
     ? appointment.payment.amount
     : appointment.services.reduce(
-        (acc: number, curr: any) => acc + curr.service.price,
+        (acc: number, curr: AppointmentService) => acc + curr.service.price,
         0,
       );
 
@@ -59,7 +59,7 @@ export default function AppointmentsCard({
         <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50 block">
           Serviços & Profissionais
         </span>
-        {appointment.services.map((s: any) => (
+        {appointment.services.map((s: AppointmentService) => (
           <div key={s.id} className="flex justify-between items-center text-sm">
             <div className="space-y-0.5">
               <p className="font-medium text-foreground/90">{s.service.name}</p>

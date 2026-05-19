@@ -17,7 +17,42 @@ export interface UserNotification {
   appointment: NotificationAppointment | null;
 }
 
-export function mapNotification(raw: any): UserNotification {
+interface RawNotificationService {
+  service?: { name?: string };
+  professional?: { name?: string };
+}
+
+interface RawNotificationAppointment {
+  status: NotificationAppointment["status"];
+  scheduledAt: string;
+  services?: RawNotificationService[];
+}
+
+interface RawNotificationSnapshotService {
+  serviceName?: string;
+  professionalName?: string;
+}
+
+interface RawNotificationSnapshotData {
+  afterStatus?: NotificationAppointment["status"];
+  beforeStatus?: NotificationAppointment["status"];
+  afterScheduledAt?: string;
+  beforeScheduledAt?: string;
+  services?: RawNotificationSnapshotService[];
+}
+
+interface RawNotification {
+  id: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+  appointment?: RawNotificationAppointment;
+  snapshot?: {
+    data?: RawNotificationSnapshotData;
+  };
+}
+
+export function mapNotification(raw: RawNotification): UserNotification {
   let appointment: NotificationAppointment | null = null;
 
   if (raw.appointment) {
@@ -25,7 +60,7 @@ export function mapNotification(raw: any): UserNotification {
       status: raw.appointment.status,
       scheduledAt: raw.appointment.scheduledAt,
       services:
-        raw.appointment.services?.map((s: any) => ({
+        raw.appointment.services?.map((s: RawNotificationService) => ({
           service: { name: s.service?.name || "Desconhecido" },
           professional: { name: s.professional?.name || "Desconhecido" },
         })) || [],
@@ -33,10 +68,10 @@ export function mapNotification(raw: any): UserNotification {
   } else if (raw.snapshot?.data) {
     const data = raw.snapshot.data;
     appointment = {
-      status: data.afterStatus ?? data.beforeStatus,
-      scheduledAt: data.afterScheduledAt ?? data.beforeScheduledAt,
+      status: data.afterStatus ?? data.beforeStatus ?? "PENDING",
+      scheduledAt: data.afterScheduledAt ?? data.beforeScheduledAt ?? "",
       services:
-        data.services?.map((s: any) => ({
+        data.services?.map((s: RawNotificationSnapshotService) => ({
           service: { name: s.serviceName || "Desconhecido" },
           professional: { name: s.professionalName || "Desconhecido" },
         })) || [],

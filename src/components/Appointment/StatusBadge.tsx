@@ -1,9 +1,9 @@
-import { CheckCircle2, Clock, XCircle } from "lucide-react";
+import { CheckCircle2, Clock, XCircle, type LucideIcon } from "lucide-react";
 
 export default function StatusBadge({ status }: { status: string }) {
   const styles: Record<
     string,
-    { bg: string; text: string; label: string; icon: any }
+    { bg: string; text: string; label: string; icon: LucideIcon }
   > = {
     PENDING: {
       bg: "bg-amber-500/10",
