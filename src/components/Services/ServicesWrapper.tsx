@@ -43,7 +43,10 @@ export default function ServicesWrapper({
         params.set("category", category.toLowerCase());
       }
 
-      router.push(`/servicos?${params.toString()}`);
+      router.push(`/servicos?${params.toString()}`, { scroll: false });
+
+      // Scroll suave para o topo do grid de serviços após filtrar
+      window.scrollTo({ top: 380, behavior: "smooth" });
     });
   };
 

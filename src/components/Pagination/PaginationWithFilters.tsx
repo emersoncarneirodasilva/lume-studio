@@ -25,7 +25,7 @@ export default function PaginationWithFilters({
     router.push(`/servicos?${params.toString()}`, { scroll: false });
 
     // 4. Scroll suave para o topo do grid
-    window.scrollTo({ top: 350, behavior: "smooth" });
+    window.scrollTo({ top: 380, behavior: "smooth" });
   };
 
   if (totalPages <= 1) return null;
