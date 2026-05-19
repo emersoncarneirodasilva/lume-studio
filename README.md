@@ -231,4 +231,4 @@ Este projeto é de uso privado e exclusivo para o ecossistema **Lume Studio** e 
 
 ## 🤝 Contribuidores
 
-Desenvolvido com ❤️, 🧠 e ☕ por **Emerson Carneiro da Silva**
+Desenvolvido com ❤️, 🧠 e 📐 por **Emerson Carneiro da Silva**
